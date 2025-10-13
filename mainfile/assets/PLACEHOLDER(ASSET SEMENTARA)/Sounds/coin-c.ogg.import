@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://dnvrdnqlkrr5v"
-path="res://.godot/imported/coin-c.ogg-72a4fd2a9714d376230bc7fb79da05f6.oggvorbisstr"
+path="res://.godot/imported/coin-c.ogg-7a749eb974eaecd0dc26c33b1d1db00d.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/Sounds/coin-c.ogg"
-dest_files=["res://.godot/imported/coin-c.ogg-72a4fd2a9714d376230bc7fb79da05f6.oggvorbisstr"]
+source_file="res://assets/PLACEHOLDER(ASSET SEMENTARA)/Sounds/coin-c.ogg"
+dest_files=["res://.godot/imported/coin-c.ogg-7a749eb974eaecd0dc26c33b1d1db00d.oggvorbisstr"]
 
 [params]
 

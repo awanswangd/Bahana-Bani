@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://bvcs0f0ui204t"
-path="res://.godot/imported/fall-b.ogg-fe8893260ada3c39e7043a9e54fdc6c2.oggvorbisstr"
+path="res://.godot/imported/fall-b.ogg-148e1aa752083345aff0f7f9d6774662.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/Sounds/fall-b.ogg"
-dest_files=["res://.godot/imported/fall-b.ogg-fe8893260ada3c39e7043a9e54fdc6c2.oggvorbisstr"]
+source_file="res://assets/PLACEHOLDER(ASSET SEMENTARA)/Sounds/fall-b.ogg"
+dest_files=["res://.godot/imported/fall-b.ogg-148e1aa752083345aff0f7f9d6774662.oggvorbisstr"]
 
 [params]
 

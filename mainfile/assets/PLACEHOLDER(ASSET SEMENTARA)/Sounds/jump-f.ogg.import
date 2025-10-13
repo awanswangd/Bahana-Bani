@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://ijkkkndtbj6p"
-path="res://.godot/imported/jump-f.ogg-c2aea04ed4e044d2d2301d3312d79274.oggvorbisstr"
+path="res://.godot/imported/jump-f.ogg-e6f744d3063d51f7891ad74700853cbb.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/Sounds/jump-f.ogg"
-dest_files=["res://.godot/imported/jump-f.ogg-c2aea04ed4e044d2d2301d3312d79274.oggvorbisstr"]
+source_file="res://assets/PLACEHOLDER(ASSET SEMENTARA)/Sounds/jump-f.ogg"
+dest_files=["res://.godot/imported/jump-f.ogg-e6f744d3063d51f7891ad74700853cbb.oggvorbisstr"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://cxpyln4no8kn6"
-path="res://.godot/imported/select-a.ogg-b39ca22e607c1164fc5b587195f6d7c2.oggvorbisstr"
+path="res://.godot/imported/select-a.ogg-7f07431c7290447af14bb111164ea867.oggvorbisstr"
 
 [deps]
 
-source_file="res://assets/Sounds/select-a.ogg"
-dest_files=["res://.godot/imported/select-a.ogg-b39ca22e607c1164fc5b587195f6d7c2.oggvorbisstr"]
+source_file="res://assets/PLACEHOLDER(ASSET SEMENTARA)/Sounds/select-a.ogg"
+dest_files=["res://.godot/imported/select-a.ogg-7f07431c7290447af14bb111164ea867.oggvorbisstr"]
 
 [params]
 

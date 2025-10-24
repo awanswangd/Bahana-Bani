@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dvswcrlsmikfa"]
 
-[ext_resource type="Texture2D" uid="uid://ipdna5ewhowg" path="res://assets/PNG/Players/Tilemap/tilemap.png" id="1_p0vlq"]
+[ext_resource type="Texture2D" uid="uid://ipdna5ewhowg" path="res://assets/PLACEHOLDER(ASSET SEMENTARA)/PNG/Players/Tilemap/tilemap.png" id="1_p0vlq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v6fml"]
 atlas = ExtResource("1_p0vlq")
@@ -40,3 +40,5 @@ frame_progress = 0.115814
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.125, 5.875)
 shape = SubResource("RectangleShape2D_qu4a1")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]

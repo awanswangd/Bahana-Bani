@@ -19,9 +19,9 @@ var facing_right = true  # To track which direction player is facing
 @onready var animated_sprite = $AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+# func _ready() -> void:
 	 # Start with the idle animation (Animasi character idle)
-	animated_sprite.play("Idle")
+#	animated_sprite.play("Idle")
 	
 	# Animasi lain yang belum ada:
 	# - "Run" - for moving left/right

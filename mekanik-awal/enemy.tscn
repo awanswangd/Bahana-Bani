@@ -1,24 +1,93 @@
-[gd_scene load_steps=3 format=3 uid="uid://7a30u6j27vkm"]
+[gd_scene load_steps=12 format=3 uid="uid://7a30u6j27vkm"]
 
 [ext_resource type="Texture2D" uid="uid://mb1vjgg1hhj7" path="res://Flight.png" id="1_4gyqm"]
 [ext_resource type="Script" uid="uid://bf2q4civbivff" path="res://enemy.gd" id="2_qi2p4"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gyqm"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qi2p4"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iifgy"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epg4t"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yqyl"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wujgv"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hb8ge"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1ltt"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dxifv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gyqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qi2p4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iifgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epg4t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yqyl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wujgv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hb8ge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1ltt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
 [node name="enemy" type="Sprite2D"]
 scale = Vector2(3.93437, 3.65083)
-texture = ExtResource("1_4gyqm")
 flip_h = true
 hframes = 8
-frame = 6
 script = ExtResource("2_qi2p4")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = -38.3797
-offset_top = -25.1997
-offset_right = 23.6203
-offset_bottom = -4.19971
+offset_left = -32.0
+offset_top = -24.0
+offset_right = 23.0
+offset_bottom = -4.0
 theme_override_font_sizes/mono_font_size = 5
 theme_override_font_sizes/normal_font_size = 15
 bbcode_enabled = true
 text = "balil"
 scroll_active = false
 horizontal_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 0.27391)
+sprite_frames = SubResource("SpriteFrames_dxifv")
+autoplay = "default"
+frame_progress = 0.854308
+flip_h = true

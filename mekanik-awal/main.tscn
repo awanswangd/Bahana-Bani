@@ -36,13 +36,13 @@ position = Vector2(1167, 60)
 position = Vector2(1170, 170)
 
 [node name="Marker2D3" type="Marker2D" parent="SpawnContainer"]
-position = Vector2(1160, 591)
-
-[node name="Marker2D4" type="Marker2D" parent="SpawnContainer"]
 position = Vector2(1166, 318)
 
-[node name="Marker2D5" type="Marker2D" parent="SpawnContainer"]
+[node name="Marker2D4" type="Marker2D" parent="SpawnContainer"]
 position = Vector2(1162, 441)
+
+[node name="Marker2D5" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1160, 591)
 
 [node name="enemycontainer" type="Node2D" parent="."]
 position = Vector2(-8, 4)

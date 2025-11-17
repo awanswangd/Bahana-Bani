@@ -4,23 +4,35 @@ extends Node2D
 @export var green: Color = Color("#639765")
 @export var red: Color = Color("#a65455")
 
-@export var speed: float = 2.0
-@export var shoot_offset: Vector2 = Vector2(-40, 0)
-@export var stop_x: float = 980.0
+@export var speed: float = 1.5
+@export var words: Array[String] = [
+	"hidup popowi",
+	"serangan kedua",
+	"final blow"
+]
 
 @onready var prompt: RichTextLabel = $RichTextLabel
-@onready var shoot_timer: Timer = $ShootTimer
+@onready var phase_timer: Timer = $PhaseTimer
+
+var current_word_index: int = 0
+var i = 1
 
 func _ready() -> void:
-	add_to_group("enemy")
-	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
+	add_to_group("enemy")  
+	add_to_group("boss")   
+
+	phase_timer.timeout.connect(_on_phase_timer_timeout)
+
+	_show_current_word()
 
 func _physics_process(delta: float) -> void:
-	if global_position.x > stop_x:
-		global_position.x -= speed
-	else:
-		global_position.x = stop_x
+	global_position.x -= speed * i
 
+func _show_current_word() -> void:
+	if current_word_index < words.size():
+		prompt.text = words[current_word_index]
+	else:
+		prompt.text = ""
 
 func get_prompt() -> String:
 	return prompt.text
@@ -49,9 +61,18 @@ func get_bbcode_color_tag(color: Color) -> String:
 func get_bbcode_end_color_tag() -> String:
 	return "[/color]"
 
-func _on_shoot_timer_timeout() -> void:
-	var main = get_tree().get_first_node_in_group("main")
-	if main == null:
-		return
+func on_word_completed() -> void:
+	current_word_index += 1
+	i = 0
 
-	main.spawn_projectile_at(global_position + shoot_offset)
+	if current_word_index >= words.size():
+		print("Boss defeated!")
+		queue_free()
+	else:
+		print("Boss phase %d complete, waiting 3s..." % current_word_index)
+		prompt.text = ""
+		phase_timer.start()
+
+func _on_phase_timer_timeout() -> void:
+	_show_current_word()
+	i = current_word_index

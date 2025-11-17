@@ -3,9 +3,10 @@ extends Node2D
 var Enemy = preload("res://enemy.tscn")
 var EnemyArcher = preload("res://enemy_archer.tscn")
 var Projectile = preload("res://projectile.tscn")
+var EnemyBoss = preload("res://enemy_boss.tscn")
 
 var score: int = 0
-var max_hp: int = 99
+var max_hp: int = 10
 var hp: int = max_hp
 
 enum GameState { PLAYING, GAME_OVER }
@@ -49,8 +50,8 @@ func _ready() -> void:
 	add_to_group("main")
 	randomize()
 	spawn_timer.start()
-	spawn_enemy()
 	update_hp_display()
+	spawn_boss()
 	score_label.text = "SCORE: %d" % score
 
 func player_hit() -> void:
@@ -134,7 +135,10 @@ func _unhandled_input(event: InputEvent) -> void:
 					print("done")
 					add_score(100)
 					current_letter_index = -1
-					active_enemy.queue_free()
+					if active_enemy != null and active_enemy.has_method("on_word_completed"):
+						active_enemy.on_word_completed()
+					else:
+						active_enemy.queue_free()
 					active_enemy = null
 			else:
 				print("gagal %s harusnya %s" % [key_typed, next_character])
@@ -167,7 +171,7 @@ func spawn_enemy() -> void:
 
 	var enemy_instance: Node2D
 
-	#chanche spawn
+	#chance spawn
 	if randi() % 3 == 0:
 		enemy_instance = EnemyArcher.instantiate()
 	else:
@@ -195,6 +199,16 @@ func spawn_projectile_at(pos: Vector2) -> void:
 	var word = projectile_words.pick_random()
 	p.set_prompt(word)
 
+func spawn_boss() -> void:
+	if game_state != GameState.PLAYING:
+		return
+
+	var boss_instance = EnemyBoss.instantiate()
+	enemy_container.add_child(boss_instance)
+
+	var spawns = spawn_container.get_children()
+	var index = randi() % spawns.size()
+	boss_instance.global_position = spawns[index].global_position
 
 func _on_player_line_area_entered(area: Area2D) -> void:
 	var obj = area.get_parent()

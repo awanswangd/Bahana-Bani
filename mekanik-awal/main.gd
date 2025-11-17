@@ -2,12 +2,16 @@ extends Node2D
 
 var Enemy = preload("res://enemy.tscn")
 var score: int = 0
+var max_hp: int = 5
+var hp: int = max_hp
 
-
+@onready var player = $Player
+@onready var hp_label = $CanvasLayer/HPLabel
 @onready var score_label = $CanvasLayer/ScoreLabel
 @onready var spawn_timer = $SpawnTimer
 @onready var enemy_container = $enemycontainer
 @onready var spawn_container = $SpawnContainer
+
 var active_enemy = null
 var current_letter_index: int = -1
 
@@ -15,10 +19,18 @@ func _ready() -> void:
 	randomize()
 	spawn_timer.start()
 	spawn_enemy()
+	update_hp_display()
+
+func game_over() -> void:
+	print("GAME OVER")
+	get_tree().paused = true
 
 func add_score(amount: int):
 	score += amount
 	score_label.text = "SCORE: %d" % score
+
+func update_hp_display() -> void:
+	hp_label.text = "HP: %d" % hp
 
 func find_new_active_enemy(typed_character: String):
 	print("Searching for enemy starting with: '%s'" % typed_character)
@@ -32,7 +44,6 @@ func find_new_active_enemy(typed_character: String):
 			current_letter_index = 1
 			active_enemy.set_next_character(current_letter_index)
 			return
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and not event.is_pressed():
@@ -69,3 +80,18 @@ func spawn_enemy():
 	var index = randi() % spawns.size()
 	enemy_container.add_child(enemy_instance)
 	enemy_instance.global_position = spawns[index].global_position
+
+func _on_player_line_area_entered(area: Area2D) -> void:
+	var enemy = area.get_parent()
+	if not enemy.is_in_group("enemy"):
+		return
+	hp -= 1
+	if hp < 0:
+		hp = 0
+	update_hp_display()
+	if enemy == active_enemy:
+		active_enemy = null
+		current_letter_index = -1
+	enemy.queue_free()
+	if hp == 0:
+		game_over()

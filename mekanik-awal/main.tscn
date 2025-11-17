@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4t1mwoac3b5s"]
+[gd_scene load_steps=6 format=3 uid="uid://b4t1mwoac3b5s"]
 
 [ext_resource type="Script" uid="uid://qijs1shf4r7t" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://cy0248sqhhl1c" path="res://BAMBOO FOREST_BG/3.png" id="1_ig7tw"]
-[ext_resource type="FontFile" uid="uid://o5jk7lnntk1g" path="res://fantasy-zone.ttf" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://d1wfy42x057kh" path="res://player.tscn" id="3_1bvp3"]
+[ext_resource type="FontFile" uid="uid://cbohj6gog6nmy" path="res://gloriahallelujah.ttf" id="4_lquwl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(133.5, 657)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1bvp3")
@@ -14,6 +18,10 @@ offset_right = 1223.0
 offset_bottom = 832.0
 texture = ExtResource("1_ig7tw")
 flip_h = true
+
+[node name="Player" parent="." instance=ExtResource("3_1bvp3")]
+position = Vector2(34, 250)
+scale = Vector2(4, 4)
 
 [node name="SpawnContainer" type="Node2D" parent="."]
 
@@ -45,14 +53,35 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -59.0
-offset_top = 24.0
-offset_right = 139.0
-offset_bottom = 60.0
+offset_top = 5.0
+offset_right = 96.0
+offset_bottom = 65.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("3_h2yge")
-theme_override_font_sizes/font_size = 26
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_lquwl")
+theme_override_font_sizes/font_size = 29
 text = "SCORE: 0"
 
+[node name="HPLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -174.0
+offset_right = 155.0
+offset_bottom = -114.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_lquwl")
+theme_override_font_sizes/font_size = 29
+text = "HP :"
+
+[node name="PlayerLine" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerLine"]
+position = Vector2(-65, 327)
+shape = SubResource("RectangleShape2D_1bvp3")
+
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="area_entered" from="PlayerLine" to="." method="_on_player_line_area_entered"]

@@ -20,15 +20,15 @@ var restart_index: int = 0
 var active_enemy = null
 var current_letter_index: int = -1
 var word_list = [
-	"game",
-	"musik",
+	"game ini bagus",
+	"musik for life",
 	"hidup popowi",
-	"bahluil",
+	"bahluil pertaminux",
 	"skill issue",
-	"quest",
+	"quest ez pz",
 	"attack on titan",
 	"colossal titan",
-	"reinkarnasi"
+	"reinkarnasi jadi slime"
 ]
 
 func _ready() -> void:

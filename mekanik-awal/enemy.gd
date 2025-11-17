@@ -3,17 +3,20 @@ extends Node2D
 @export var blue: Color = Color("#4682b4")
 @export var green: Color = Color("#639765")
 @export var red: Color = Color("#a65455")
-@export var speed: float = 0.5
+@export var speed: float = 4
 @onready var prompt = $RichTextLabel
 
 func _ready() -> void:
 	add_to_group("enemy")
 
 func _physics_process(delta: float) -> void:
-	global_position.x -= speed + 1
+	global_position.x -= speed
 
 func get_prompt() -> String:
 	return prompt.text
+
+func set_prompt(text: String) -> void:
+	prompt.text = text
 
 func set_next_character(next_character_index: int):
 	var blue_text = get_bbcode_color_tag(blue) + prompt.text.substr(0, next_character_index) + get_bbcode_end_color_tag()

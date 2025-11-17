@@ -77,16 +77,20 @@ hframes = 8
 script = ExtResource("2_qi2p4")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+clip_contents = false
 offset_left = -32.0
 offset_top = -24.0
 offset_right = 23.0
 offset_bottom = -4.0
+size_flags_horizontal = 3
 theme_override_font_sizes/mono_font_size = 5
 theme_override_font_sizes/normal_font_size = 15
 bbcode_enabled = true
-text = "balil"
+text = "Text Musuh"
 scroll_active = false
+autowrap_mode = 0
 horizontal_alignment = 1
+justification_flags = 131
 metadata/_edit_use_anchors_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

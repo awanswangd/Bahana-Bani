@@ -5,6 +5,11 @@ var score: int = 0
 var max_hp: int = 5
 var hp: int = max_hp
 
+enum GameState { PLAYING, GAME_OVER }
+var game_state: GameState = GameState.PLAYING
+var restart_phrase := "hidup lagi"
+var restart_index: int = 0
+
 @onready var player = $Player
 @onready var hp_label = $CanvasLayer/HPLabel
 @onready var score_label = $CanvasLayer/ScoreLabel
@@ -14,16 +19,44 @@ var hp: int = max_hp
 
 var active_enemy = null
 var current_letter_index: int = -1
+var word_list = [
+	"game",
+	"musik",
+	"hidup popowi",
+	"bahluil",
+	"skill issue",
+	"quest",
+	"attack on titan",
+	"colossal titan",
+	"reinkarnasi"
+]
 
 func _ready() -> void:
 	randomize()
 	spawn_timer.start()
 	spawn_enemy()
 	update_hp_display()
+	score_label.text = "SCORE: %d" % score
+
+func player_hit() -> void:
+	if game_state != GameState.PLAYING:
+		return
+	hp -= 1
+	if hp < 0:
+		hp = 0
+	update_hp_display()
+	if hp == 0:
+		game_over()
 
 func game_over() -> void:
+	game_state = GameState.GAME_OVER
 	print("GAME OVER")
-	get_tree().paused = true
+	spawn_timer.stop()
+	for enemy in enemy_container.get_children():
+		enemy.queue_free()
+	var go_label = $CanvasLayer/GameOverLabel
+	go_label.text = "GAME OVER\nKetik \"hidup lagi\" untuk bermain lagi"
+	go_label.show()
 
 func add_score(amount: int):
 	score += amount
@@ -50,9 +83,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		var key_typed = event.as_text().to_lower()
 		if key_typed == "":
 			return
-		
+		if key_typed == "space":
+			key_typed = " "
+		if game_state == GameState.GAME_OVER:
+			handle_restart_typing(key_typed)
+			return
 		print("Input detected: '%s'" % key_typed)
-		
 		if active_enemy == null:
 			find_new_active_enemy(key_typed)
 		else:
@@ -63,6 +99,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				current_letter_index += 1
 				active_enemy.set_next_character(current_letter_index)
 				if current_letter_index == prompt.length():
+					print("done")
 					add_score(100)
 					current_letter_index = -1
 					active_enemy.queue_free()
@@ -70,6 +107,24 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				print("gagal %s harusnya %s" % [key_typed, next_character])
 
+func handle_restart_typing(key_typed: String) -> void:
+	var key_char := key_typed
+
+	if key_typed == "space":
+		key_char = " "
+
+	var expected_char := restart_phrase.substr(restart_index, 1)
+
+	if key_char == expected_char:
+		restart_index += 1
+		print("Restart progress: %d / %d" % [restart_index, restart_phrase.length()])
+
+		if restart_index >= restart_phrase.length():
+			print("Restart complete! Hidup lagi")
+			get_tree().reload_current_scene()
+	else:
+		print("Salah ketik buat restart, mulai lagi dari awal.")
+		restart_index = 0
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()
@@ -80,6 +135,8 @@ func spawn_enemy():
 	var index = randi() % spawns.size()
 	enemy_container.add_child(enemy_instance)
 	enemy_instance.global_position = spawns[index].global_position
+	var word = word_list.pick_random()
+	enemy_instance.set_prompt(word)
 
 func _on_player_line_area_entered(area: Area2D) -> void:
 	var enemy = area.get_parent()

@@ -1,10 +1,11 @@
 extends Node2D
 
 var Enemy = preload("res://enemy.tscn")
+var Projectile = preload("res://projectile.tscn")
+
 var score: int = 0
 var max_hp: int = 5
 var hp: int = max_hp
-
 enum GameState { PLAYING, GAME_OVER }
 var game_state: GameState = GameState.PLAYING
 var restart_phrase := "hidup lagi"
@@ -16,6 +17,7 @@ var restart_index: int = 0
 @onready var spawn_timer = $SpawnTimer
 @onready var enemy_container = $enemycontainer
 @onready var spawn_container = $SpawnContainer
+@onready var projectile_container = $ProjectileContainer
 
 var active_enemy = null
 var current_letter_index: int = -1
@@ -67,12 +69,29 @@ func update_hp_display() -> void:
 
 func find_new_active_enemy(typed_character: String):
 	print("Searching for enemy starting with: '%s'" % typed_character)
+	for projectile in projectile_container.get_children():
+		var prompt = projectile.get_prompt()
+		print("Checking projectile with prompt: '%s'" % prompt)
+		if prompt.is_empty():
+			continue
+
+		var next_character = prompt.substr(0, 1).to_lower()
+		if next_character == typed_character:
+			print("Found projectile that starts with %s" % next_character)
+			active_enemy = projectile
+			current_letter_index = 1
+			active_enemy.set_next_character(current_letter_index)
+			return
+	
 	for enemy in enemy_container.get_children():
 		var prompt = enemy.get_prompt()
 		print("Checking enemy with prompt: '%s'" % prompt)
+		if prompt.is_empty():
+			continue
+
 		var next_character = prompt.substr(0, 1).to_lower()
 		if next_character == typed_character:
-			print("found new enemy that start with %s" % next_character)
+			print("Found enemy that starts with %s" % next_character)
 			active_enemy = enemy
 			current_letter_index = 1
 			active_enemy.set_next_character(current_letter_index)
@@ -139,16 +158,28 @@ func spawn_enemy():
 	enemy_instance.set_prompt(word)
 
 func _on_player_line_area_entered(area: Area2D) -> void:
-	var enemy = area.get_parent()
-	if not enemy.is_in_group("enemy"):
+	var obj = area.get_parent()
+	if obj.is_in_group("enemy"):
+		hp -= 1
+		if hp < 0:
+			hp = 0
+		update_hp_display()
+		if obj == active_enemy:
+			active_enemy = null
+			current_letter_index = -1
+		obj.queue_free()
+		if hp == 0:
+			game_over()
 		return
-	hp -= 1
-	if hp < 0:
-		hp = 0
-	update_hp_display()
-	if enemy == active_enemy:
-		active_enemy = null
-		current_letter_index = -1
-	enemy.queue_free()
-	if hp == 0:
-		game_over()
+	if obj.is_in_group("projectile"):
+		hp -= 1
+		if hp < 0:
+			hp = 0
+		update_hp_display()
+		if obj == active_enemy:
+			active_enemy = null
+			current_letter_index = -1
+		obj.queue_free()
+		if hp == 0:
+			game_over()
+		return

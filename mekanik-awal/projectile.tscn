@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbpuplgmdfmuy"]
+
+[ext_resource type="Script" uid="uid://couduv1rtl83q" path="res://projectile.gd" id="1_a85iw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_akgne"]
+size = Vector2(35, 6)
+
+[node name="Projectile" type="Node2D"]
+script = ExtResource("1_a85iw")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+clip_contents = false
+offset_left = -26.0
+offset_top = -24.0
+offset_right = 29.0
+offset_bottom = -4.0
+size_flags_horizontal = 3
+theme_override_font_sizes/mono_font_size = 5
+theme_override_font_sizes/normal_font_size = 15
+bbcode_enabled = true
+text = "popo"
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+justification_flags = 131
+metadata/_edit_use_anchors_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_akgne")

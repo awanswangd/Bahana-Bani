@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4t1mwoac3b5s"]
+[gd_scene load_steps=8 format=3 uid="uid://b4t1mwoac3b5s"]
 
 [ext_resource type="Script" uid="uid://qijs1shf4r7t" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://cy0248sqhhl1c" path="res://BAMBOO FOREST_BG/3.png" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://d1wfy42x057kh" path="res://player.tscn" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://bbpuplgmdfmuy" path="res://projectile.tscn" id="4_7mycd"]
 [ext_resource type="FontFile" uid="uid://cbohj6gog6nmy" path="res://gloriahallelujah.ttf" id="4_lquwl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
@@ -21,6 +22,7 @@ offset_right = 1223.0
 offset_bottom = 832.0
 texture = ExtResource("1_ig7tw")
 flip_h = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("3_1bvp3")]
 position = Vector2(34, 250)
@@ -46,6 +48,11 @@ position = Vector2(1162, 441)
 [node name="enemycontainer" type="Node2D" parent="."]
 position = Vector2(-8, 4)
 
+[node name="ProjectileContainer" type="Node2D" parent="."]
+position = Vector2(1176, 240)
+
+[node name="Projectile" parent="ProjectileContainer" instance=ExtResource("4_7mycd")]
+
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
 
@@ -65,6 +72,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_lquwl")
 theme_override_font_sizes/font_size = 29
 text = "SCORE: 0"
+metadata/_edit_use_anchors_ = true
 
 [node name="HPLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 4
@@ -79,6 +87,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_lquwl")
 theme_override_font_sizes/font_size = 29
 text = "HP :"
+metadata/_edit_use_anchors_ = true
 
 [node name="GameOverLabel" type="Label" parent="CanvasLayer"]
 visible = false

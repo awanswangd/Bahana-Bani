@@ -1,7 +1,10 @@
 extends Node2D
 
 var Enemy = preload("res://enemy.tscn")
+var score: int = 0
 
+
+@onready var score_label = $CanvasLayer/ScoreLabel
 @onready var spawn_timer = $SpawnTimer
 @onready var enemy_container = $enemycontainer
 @onready var spawn_container = $SpawnContainer
@@ -13,6 +16,9 @@ func _ready() -> void:
 	spawn_timer.start()
 	spawn_enemy()
 
+func add_score(amount: int):
+	score += amount
+	score_label.text = "SCORE: %d" % score
 
 func find_new_active_enemy(typed_character: String):
 	print("Searching for enemy starting with: '%s'" % typed_character)
@@ -46,7 +52,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				current_letter_index += 1
 				active_enemy.set_next_character(current_letter_index)
 				if current_letter_index == prompt.length():
-					print("done")
+					add_score(100)
 					current_letter_index = -1
 					active_enemy.queue_free()
 					active_enemy = null

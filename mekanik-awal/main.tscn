@@ -1,16 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4t1mwoac3b5s"]
+[gd_scene load_steps=4 format=3 uid="uid://b4t1mwoac3b5s"]
 
 [ext_resource type="Script" uid="uid://qijs1shf4r7t" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://cy0248sqhhl1c" path="res://BAMBOO FOREST_BG/3.png" id="1_ig7tw"]
+[ext_resource type="FontFile" uid="uid://o5jk7lnntk1g" path="res://fantasy-zone.ttf" id="3_h2yge"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1bvp3")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -32.0
-offset_top = 11.0
+offset_top = 2.0
 offset_right = 1223.0
-offset_bottom = 841.0
+offset_bottom = 832.0
 texture = ExtResource("1_ig7tw")
 flip_h = true
 
@@ -36,5 +37,22 @@ position = Vector2(-8, 4)
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -59.0
+offset_top = 24.0
+offset_right = 139.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_h2yge")
+theme_override_font_sizes/font_size = 26
+text = "SCORE: 0"
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

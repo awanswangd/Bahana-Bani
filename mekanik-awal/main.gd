@@ -1,11 +1,13 @@
 extends Node2D
 
 var Enemy = preload("res://enemy.tscn")
+var EnemyArcher = preload("res://enemy_archer.tscn")
 var Projectile = preload("res://projectile.tscn")
 
 var score: int = 0
-var max_hp: int = 5
+var max_hp: int = 99
 var hp: int = max_hp
+
 enum GameState { PLAYING, GAME_OVER }
 var game_state: GameState = GameState.PLAYING
 var restart_phrase := "hidup lagi"
@@ -21,6 +23,7 @@ var restart_index: int = 0
 
 var active_enemy = null
 var current_letter_index: int = -1
+
 var word_list = [
 	"game ini bagus",
 	"musik for life",
@@ -32,8 +35,18 @@ var word_list = [
 	"colossal titan",
 	"reinkarnasi jadi slime"
 ]
+var projectile_words = [
+	"po",
+	"pi",
+	"pow",
+	"zap",
+	"hit",
+	"wid",
+	"xo"
+]
 
 func _ready() -> void:
+	add_to_group("main")
 	randomize()
 	spawn_timer.start()
 	spawn_enemy()
@@ -148,14 +161,40 @@ func handle_restart_typing(key_typed: String) -> void:
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()
 
-func spawn_enemy():
-	var enemy_instance = Enemy.instantiate()
+func spawn_enemy() -> void:
+	if game_state != GameState.PLAYING:
+		return
+
+	var enemy_instance: Node2D
+
+	#chanche spawn
+	if randi() % 3 == 0:
+		enemy_instance = EnemyArcher.instantiate()
+	else:
+		enemy_instance = Enemy.instantiate()
+
 	var spawns = spawn_container.get_children()
 	var index = randi() % spawns.size()
+
 	enemy_container.add_child(enemy_instance)
 	enemy_instance.global_position = spawns[index].global_position
-	var word = word_list.pick_random()
-	enemy_instance.set_prompt(word)
+
+	if enemy_instance.has_method("set_prompt"):
+		var word = word_list.pick_random()
+		enemy_instance.set_prompt(word)
+
+
+func spawn_projectile_at(pos: Vector2) -> void:
+	if game_state != GameState.PLAYING:
+		return
+
+	var p = Projectile.instantiate()
+	projectile_container.add_child(p)
+	p.global_position = pos
+
+	var word = projectile_words.pick_random()
+	p.set_prompt(word)
+
 
 func _on_player_line_area_entered(area: Area2D) -> void:
 	var obj = area.get_parent()

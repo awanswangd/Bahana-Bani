@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4t1mwoac3b5s"]
+[gd_scene load_steps=7 format=3 uid="uid://b4t1mwoac3b5s"]
 
 [ext_resource type="Script" uid="uid://qijs1shf4r7t" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://cy0248sqhhl1c" path="res://BAMBOO FOREST_BG/3.png" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://d1wfy42x057kh" path="res://player.tscn" id="3_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://bbpuplgmdfmuy" path="res://projectile.tscn" id="4_7mycd"]
 [ext_resource type="FontFile" uid="uid://cbohj6gog6nmy" path="res://gloriahallelujah.ttf" id="4_lquwl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
@@ -50,8 +49,6 @@ position = Vector2(-8, 4)
 
 [node name="ProjectileContainer" type="Node2D" parent="."]
 position = Vector2(1176, 240)
-
-[node name="Projectile" parent="ProjectileContainer" instance=ExtResource("4_7mycd")]
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 3.0

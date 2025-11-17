@@ -4,20 +4,25 @@ extends Node2D
 @export var green: Color = Color("#639765")
 @export var red: Color = Color("#a65455")
 
-@export var speed: float = 200.0  # panah lebih cepat dari musuh biasa
+@export var speed: float = 2.0
+@export var shoot_offset: Vector2 = Vector2(-40, 0)
+@export var stop_x: float = 980.0
 
 @onready var prompt: RichTextLabel = $RichTextLabel
+@onready var shoot_timer: Timer = $ShootTimer
 
 func _ready() -> void:
-	add_to_group("projectile")
+	add_to_group("enemy")
+	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
 
 func _physics_process(delta: float) -> void:
-	# gerak ke kiri
-	global_position.x -= speed * delta
+	# Selama masih di kanan dari stop_x, dia tetap jalan
+	if global_position.x > stop_x:
+		global_position.x -= speed
+	else:
+		# Sudah sampai titik berhenti, diam di tempat
+		global_position.x = stop_x
 
-	# optional: kalau sudah jauh banget, auto hilang
-	if global_position.x < -2000:
-		queue_free()
 
 func get_prompt() -> String:
 	return prompt.text
@@ -45,3 +50,10 @@ func get_bbcode_color_tag(color: Color) -> String:
 
 func get_bbcode_end_color_tag() -> String:
 	return "[/color]"
+
+func _on_shoot_timer_timeout() -> void:
+	var main = get_tree().get_first_node_in_group("main")
+	if main == null:
+		return
+
+	main.spawn_projectile_at(global_position + shoot_offset)

@@ -1,32 +1,48 @@
-[gd_scene load_steps=3 format=3 uid="uid://bbpuplgmdfmuy"]
+[gd_scene load_steps=4 format=3 uid="uid://bbpuplgmdfmuy"]
 
 [ext_resource type="Script" uid="uid://couduv1rtl83q" path="res://projectile.gd" id="1_a85iw"]
+[ext_resource type="Texture2D" uid="uid://cx2aq0tjbaa7c" path="res://arrow.png" id="2_qxf0c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_akgne"]
-size = Vector2(35, 6)
+size = Vector2(22.0896, 8.0597)
 
 [node name="Projectile" type="Node2D"]
+scale = Vector2(0.3, 0.3)
 script = ExtResource("1_a85iw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(3.8147e-06, 3.33333)
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("2_qxf0c")
+flip_h = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 clip_contents = false
-offset_left = -26.0
-offset_top = -24.0
-offset_right = 29.0
-offset_bottom = -4.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -163.333
+offset_top = -216.667
+offset_right = 172.667
+offset_bottom = -81.6667
+grow_horizontal = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/mono_font_size = 5
-theme_override_font_sizes/normal_font_size = 15
+theme_override_font_sizes/mono_font_size = 43
+theme_override_font_sizes/normal_font_size = 126
 bbcode_enabled = true
 text = "popo"
 scroll_active = false
 autowrap_mode = 0
+tab_size = 10
 horizontal_alignment = 1
 justification_flags = 131
 metadata/_edit_use_anchors_ = true
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-4.76837e-07, -3.97364e-07)
+scale = Vector2(18.6111, 18.6111)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-0.5, 0)
+position = Vector2(-0.179104, -0.179104)
+scale = Vector2(0.3, 0.3)
 shape = SubResource("RectangleShape2D_akgne")

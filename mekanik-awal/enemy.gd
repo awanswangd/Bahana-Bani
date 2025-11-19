@@ -3,7 +3,7 @@ extends Node2D
 @export var blue: Color = Color("#4682b4")
 @export var green: Color = Color("#639765")
 @export var red: Color = Color("#a65455")
-@export var speed: float = 4
+@export var speed: float = 10
 @onready var prompt = $RichTextLabel
 
 func _ready() -> void:

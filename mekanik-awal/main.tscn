@@ -21,6 +21,7 @@ offset_right = 1223.0
 offset_bottom = 832.0
 texture = ExtResource("1_ig7tw")
 flip_h = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("3_1bvp3")]
 position = Vector2(34, 250)
@@ -35,16 +36,19 @@ position = Vector2(1167, 60)
 position = Vector2(1170, 170)
 
 [node name="Marker2D3" type="Marker2D" parent="SpawnContainer"]
-position = Vector2(1160, 591)
-
-[node name="Marker2D4" type="Marker2D" parent="SpawnContainer"]
 position = Vector2(1166, 318)
 
-[node name="Marker2D5" type="Marker2D" parent="SpawnContainer"]
+[node name="Marker2D4" type="Marker2D" parent="SpawnContainer"]
 position = Vector2(1162, 441)
+
+[node name="Marker2D5" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1160, 591)
 
 [node name="enemycontainer" type="Node2D" parent="."]
 position = Vector2(-8, 4)
+
+[node name="ProjectileContainer" type="Node2D" parent="."]
+position = Vector2(1176, 240)
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -65,6 +69,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_lquwl")
 theme_override_font_sizes/font_size = 29
 text = "SCORE: 0"
+metadata/_edit_use_anchors_ = true
 
 [node name="HPLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 4
@@ -79,6 +84,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_lquwl")
 theme_override_font_sizes/font_size = 29
 text = "HP :"
+metadata/_edit_use_anchors_ = true
 
 [node name="GameOverLabel" type="Label" parent="CanvasLayer"]
 visible = false
@@ -96,11 +102,31 @@ text = "Game Over"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="WaveLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -25.5
+offset_top = -57.0
+offset_right = 25.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_lquwl")
+theme_override_font_sizes/font_size = 28
+text = "tes"
+
 [node name="PlayerLine" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerLine"]
 position = Vector2(-65, 327)
 shape = SubResource("RectangleShape2D_1bvp3")
 
+[node name="WaveTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="area_entered" from="PlayerLine" to="." method="_on_player_line_area_entered"]
+[connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]

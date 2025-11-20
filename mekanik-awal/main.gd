@@ -61,6 +61,8 @@ var spawning: bool = false
 var boss_spawned: bool = false
 var inter_wave_delay_seconds: float = 3.0
 
+var battle_theme = load("res://audio/bgm/battle_theme.ogg")
+
 func _ready() -> void:
 	add_to_group("main")
 	randomize()
@@ -69,6 +71,7 @@ func _ready() -> void:
 	wave_timer.timeout.connect(_on_wave_timer_timeout)
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 	start_wave(current_wave_index)
+	SoundManager.play_music(battle_theme)
 
 func player_hit() -> void:
 	if game_state != GameState.PLAYING:
@@ -83,6 +86,7 @@ func player_hit() -> void:
 func game_over() -> void:
 	game_state = GameState.GAME_OVER
 	print("GAME OVER")
+	SoundManager.play_sfx("lose")
 	spawn_timer.stop()
 	for enemy in enemy_container.get_children():
 		enemy.queue_free()
@@ -149,6 +153,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				active_enemy.set_next_character(current_letter_index)
 				if current_letter_index == prompt.length():
 					print("done")
+					SoundManager.play_sfx("word_correct")
 					add_score(100)
 					current_letter_index = -1
 					if active_enemy != null and active_enemy.has_method("on_word_completed"):
@@ -211,7 +216,7 @@ func spawn_enemy() -> void:
 		enemy_instance = EnemyArcher.instantiate()
 	else:
 		enemy_instance = Enemy.instantiate()
-
+	
 	var spawns = spawn_container.get_children()
 	var index = randi() % spawns.size()
 
@@ -233,6 +238,8 @@ func spawn_projectile_at(pos: Vector2) -> void:
 
 	var word = projectile_words.pick_random()
 	p.set_prompt(word)
+	
+	SoundManager.play_sfx("enemy_projectile")
 
 func start_wave(index: int) -> void:
 	if index < 0 or index >= waves.size():
@@ -296,6 +303,7 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 	var obj = area.get_parent()
 	if obj.is_in_group("enemy"):
 		hp -= 1
+		SoundManager.play_sfx("hit")
 		if hp < 0:
 			hp = 0
 		update_hp_display()
@@ -309,6 +317,7 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 		return
 	if obj.is_in_group("projectile"):
 		hp -= 1
+		SoundManager.play_sfx("hit")
 		if hp < 0:
 			hp = 0
 		update_hp_display()
@@ -324,6 +333,7 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 func show_win() -> void:
 	game_state = GameState.GAME_OVER
 	print("YOU WIN")
+	SoundManager.play_sfx("win")
 	spawn_timer.stop()
 	wave_timer.stop()
 	spawning = false

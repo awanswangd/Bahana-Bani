@@ -14,3 +14,7 @@ config/name="mekanik awal"
 run/main_scene="uid://b4t1mwoac3b5s"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+SoundManager="*res://sound_manager.tscn"

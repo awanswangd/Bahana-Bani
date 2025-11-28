@@ -154,7 +154,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				active_enemy.set_next_character(current_letter_index)
 				if current_letter_index == prompt.length():
 					print("done")
-					SoundManager.play_sfx("word_correct")
+					if prompt.length() <= 3:
+						SoundManager.play_sfx("projectile_correct")
+					else:
+						SoundManager.play_sfx("correct")
 					add_score(100)
 					current_letter_index = -1
 					if active_enemy != null and active_enemy.has_method("die"):
@@ -165,6 +168,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					call_deferred("_check_wave_progress")
 			else:
 				print("gagal %s harusnya %s" % [key_typed, next_character])
+				SoundManager.play_sfx("misstype")
 
 func handle_restart_typing(key_typed: String) -> void:
 	var key_char := key_typed

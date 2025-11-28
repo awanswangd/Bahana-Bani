@@ -9,10 +9,12 @@ var sfx_library = {}
 # Daftar sfx
 var sfx_to_load = {
 	"win": "res://audio/sfx/win.wav",
-	"word_correct": "res://audio/sfx/word_correct.wav",
+	"correct": "res://audio/sfx/correct.wav",
 	"enemy_projectile": "res://audio/sfx/enemy_projectile.wav",
 	"hit": "res://audio/sfx/hit.wav",
-	"lose": "res://audio/sfx/lose.wav"
+	"lose": "res://audio/sfx/lose.wav",
+	"misstype": "res://audio/sfx/misstype.wav",
+	"projectile_correct": "res://audio/sfx/projectile_correct.wav"
 }
 
 

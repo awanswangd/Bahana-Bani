@@ -1,7 +1,24 @@
-[gd_scene load_steps=13 format=3 uid="uid://ckxc6a4jr0xeo"]
+[gd_scene load_steps=18 format=3 uid="uid://ckxc6a4jr0xeo"]
 
 [ext_resource type="Script" uid="uid://dfy4upaxjy6y8" path="res://enemy_archer.gd" id="1_ehv12"]
+[ext_resource type="Texture2D" uid="uid://ojerk4o4x8l4" path="res://Death.png" id="2_7oore"]
 [ext_resource type="Texture2D" uid="uid://mb1vjgg1hhj7" path="res://Flight.png" id="2_x37ra"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpg52"]
+atlas = ExtResource("2_7oore")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4kc1"]
+atlas = ExtResource("2_7oore")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2dwyw"]
+atlas = ExtResource("2_7oore")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34v2e"]
+atlas = ExtResource("2_7oore")
+region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4gyqm"]
 atlas = ExtResource("2_x37ra")
@@ -39,6 +56,23 @@ region = Rect2(1050, 0, 150, 150)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_jpg52")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4kc1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2dwyw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34v2e")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_4gyqm")
 }, {
 "duration": 1.0,
@@ -63,7 +97,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_e1ltt")
 }],
 "loop": true,
-"name": &"default",
+"name": &"flight",
 "speed": 15.0
 }]
 
@@ -96,8 +130,7 @@ metadata/_edit_use_anchors_ = true
 modulate = Color(0.792663, 0.366325, 0.35442, 1)
 position = Vector2(0, 0.27391)
 sprite_frames = SubResource("SpriteFrames_dxifv")
-autoplay = "default"
-frame_progress = 0.854308
+animation = &"death"
 flip_h = true
 
 [node name="Area2D" type="Area2D" parent="."]

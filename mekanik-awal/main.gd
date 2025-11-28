@@ -6,7 +6,7 @@ var Projectile = preload("res://projectile.tscn")
 var EnemyBoss = preload("res://enemy_boss.tscn")
 
 var score: int = 0
-var max_hp: int = 100
+var max_hp: int = 5
 var hp: int = max_hp
 
 enum GameState { PLAYING, GAME_OVER }
@@ -29,15 +29,16 @@ var active_enemy = null
 var current_letter_index: int = -1
 
 var word_list = [
-	"game ini bagus",
-	"musik for life",
-	"hidup popowi",
-	"bahluil pertaminux",
-	"skill issue",
-	"quest ez pz",
-	"attack on titan",
-	"colossal titan",
-	"reinkarnasi jadi slime"
+	"temambugh",
+	"kaghai",
+	"kumbang",
+	"pedom",
+	"lapah",
+	"ghatong",
+	"lengong",
+	"ghuccah",
+	"tebengbang",
+	"mahu",
 ]
 var projectile_words = [
 	"po",
@@ -156,8 +157,8 @@ func _unhandled_input(event: InputEvent) -> void:
 					SoundManager.play_sfx("word_correct")
 					add_score(100)
 					current_letter_index = -1
-					if active_enemy != null and active_enemy.has_method("on_word_completed"):
-						active_enemy.on_word_completed()
+					if active_enemy != null and active_enemy.has_method("die"):
+						active_enemy.die()
 					else:
 						active_enemy.queue_free()
 					active_enemy = null
@@ -395,13 +396,13 @@ func _check_wave_progress() -> void:
 	# hitung apakah ada enemy/projectile yang valid (belum queued_for_deletion)
 	var any_enemy := false
 	for c in enemy_container.get_children():
-		if not c.is_queued_for_deletion():
+		if not c.is_queued_for_deletion() and not c.is_dead:
 			any_enemy = true
 			break
 
 	if not any_enemy:
 		for p in projectile_container.get_children():
-			if not p.is_queued_for_deletion():
+			if not p.is_queued_for_deletion() :
 				any_enemy = true
 				break
 
@@ -438,3 +439,7 @@ func _on_wave_timer_timeout() -> void:
 		start_wave(current_wave_index)
 	else:
 		show_win()
+
+func reset_active_enemy():
+	active_enemy = null
+	current_letter_index = -1

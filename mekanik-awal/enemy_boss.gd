@@ -1,14 +1,16 @@
 extends Node2D
 
 @export var blue: Color = Color("#4682b4")
-@export var green: Color = Color("#639765")
-@export var red: Color = Color("#a65455")
-
+@export var green: Color = Color("#FFFFFF")
+@export var red: Color = Color("#FFFFFF")
+@export var is_dead: bool = false
+var is_animating_death: bool = false
+@onready var sprite = $AnimatedSprite2D
 @export var speed: float = 1.5
 @export var words: Array[String] = [
-	"hidup popowi",
-	"serangan kedua",
-	"final blow"
+	"aku bossnya",
+	"segitu aja gk cukup",
+	"serangan terakhir power"
 ]
 
 @onready var prompt: RichTextLabel = $RichTextLabel
@@ -26,7 +28,13 @@ func _ready() -> void:
 	_show_current_word()
 
 func _physics_process(delta: float) -> void:
-	global_position.x -= speed * i
+	if is_dead:
+		return
+
+	global_position.x -= speed
+	if not sprite.is_playing():
+		sprite.play("flight")
+
 
 func _show_current_word() -> void:
 	if current_word_index < words.size():
@@ -76,3 +84,9 @@ func on_word_completed() -> void:
 func _on_phase_timer_timeout() -> void:
 	_show_current_word()
 	i = current_word_index
+
+func die():
+	is_dead = true
+	$AnimatedSprite2D.play("death")
+	await $AnimatedSprite2D.animation_finished
+	queue_free()

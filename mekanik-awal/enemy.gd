@@ -1,16 +1,26 @@
 extends Node2D
 
 @export var blue: Color = Color("#4682b4")
-@export var green: Color = Color("#639765")
-@export var red: Color = Color("#a65455")
-@export var speed: float = 10
+@export var green: Color = Color("#FFFFFF")
+@export var red: Color = Color("#FFFFFF")
+@export var speed: float = 1
 @onready var prompt = $RichTextLabel
+@onready var sprite = $AnimatedSprite2D
+@export var is_dead: bool = false
+var is_animating_death: bool = false
+
+
 
 func _ready() -> void:
 	add_to_group("enemy")
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta):
+	if is_dead:
+		return
+
 	global_position.x -= speed
+	if not sprite.is_playing():
+		sprite.play("flight")
 
 func get_prompt() -> String:
 	return prompt.text
@@ -33,3 +43,9 @@ func get_bbcode_color_tag(color: Color) -> String:
 
 func get_bbcode_end_color_tag() -> String:
 	return "[/color]"
+
+func die():
+	is_dead = true
+	$AnimatedSprite2D.play("death")
+	await $AnimatedSprite2D.animation_finished
+	queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4t1mwoac3b5s"]
+[gd_scene load_steps=8 format=3 uid="uid://b4t1mwoac3b5s"]
 
 [ext_resource type="Script" uid="uid://qijs1shf4r7t" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://cy0248sqhhl1c" path="res://BAMBOO FOREST_BG/3.png" id="1_ig7tw"]
@@ -7,6 +7,8 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
 bg_color = Color(0.0728426, 0.0728426, 0.0728426, 0.443137)
+
+[sub_resource type="SystemFont" id="SystemFont_1bvp3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
 size = Vector2(133.5, 657)
@@ -117,6 +119,19 @@ theme_override_fonts/font = ExtResource("4_lquwl")
 theme_override_font_sizes/font_size = 28
 text = "tes"
 
+[node name="WaveIntroLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = SubResource("SystemFont_1bvp3")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="PlayerLine" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerLine"]
@@ -125,6 +140,10 @@ shape = SubResource("RectangleShape2D_1bvp3")
 
 [node name="WaveTimer" type="Timer" parent="."]
 wait_time = 3.0
+one_shot = true
+
+[node name="IntroTimer" type="Timer" parent="."]
+wait_time = 1.509
 one_shot = true
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

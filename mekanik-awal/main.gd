@@ -24,6 +24,8 @@ var restart_index: int = 0
 @onready var wave_timer = $WaveTimer
 @onready var wave_label = $CanvasLayer.get_node_or_null("WaveLabel")
 @onready var gameover_label = $CanvasLayer/GameOverLabel
+@onready var intro_timer: Timer = $IntroTimer
+@onready var wave_intro_label: Label = $CanvasLayer/WaveIntroLabel
 
 var active_enemy = null
 var current_letter_index: int = -1
@@ -61,6 +63,7 @@ var remaining_to_spawn: int = 0
 var spawning: bool = false
 var boss_spawned: bool = false
 var inter_wave_delay_seconds: float = 3.0
+var wave_intro_duration: float = 1.5
 
 var battle_theme = load("res://audio/bgm/battle_theme.ogg")
 
@@ -69,8 +72,19 @@ func _ready() -> void:
 	randomize()
 	update_hp_display()
 	score_label.text = "SCORE: %d" % score
+
 	wave_timer.timeout.connect(_on_wave_timer_timeout)
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
+
+	if intro_timer:
+		intro_timer.timeout.connect(_on_intro_timer_timeout)
+		print("IntroTimer connected.")
+	else:
+		print("IntroTimer NOT FOUND! Wave intro timer will be skipped.")
+
+	if wave_intro_label:
+		wave_intro_label.hide()
+
 	start_wave(current_wave_index)
 	SoundManager.play_music(battle_theme)
 
@@ -249,27 +263,60 @@ func spawn_projectile_at(pos: Vector2) -> void:
 func start_wave(index: int) -> void:
 	if index < 0 or index >= waves.size():
 		return
+
 	var cfg = waves[index]
-	# pastikan set dari awal
+
+	# set status wave
 	current_wave_index = index
 	remaining_to_spawn = cfg.minion_count
-	spawning = true
+	spawning = false
 	boss_spawned = false
 
-	print(">> start_wave: %s (index=%d) — will spawn %d | spawn_boss=%s | mix=%s" %
+	print(">> start_wave: %s (index=%d) — minions=%d | spawn_boss=%s | mix=%s (spawning will begin after intro)" %
 		[cfg.name, index, remaining_to_spawn, str(cfg.spawn_boss), str(cfg.mix)])
 
-	# spawn boss segera jika perlu (boss + minions present)
-	if cfg.spawn_boss:
+	# pastikan spawn_timer nggak jalan dulu
+	if not spawn_timer.is_stopped():
+		spawn_timer.stop()
+
+	_update_wave_label()
+	_show_wave_intro(index)
+
+func _show_wave_intro(index: int) -> void:
+	if wave_intro_label:
+		var cfg_name = waves[index].name if index < waves.size() else "Wave ?"
+		wave_intro_label.text = cfg_name
+		wave_intro_label.show()
+
+	intro_timer.start(wave_intro_duration)
+
+
+func _on_intro_timer_timeout() -> void:
+	# sembunyikan label intro
+	if wave_intro_label:
+		wave_intro_label.hide()
+
+	# kalau game sudah game over, jangan mulai wave
+	if game_state != GameState.PLAYING:
+		return
+
+	# mulai spawning untuk wave aktif
+	var cfg = waves[current_wave_index]
+	spawning = true
+	remaining_to_spawn = cfg.minion_count
+
+	print(">> Intro selesai, mulai spawn wave %d (minions=%d, spawn_boss=%s, mix=%s)" %
+		[current_wave_index, remaining_to_spawn, str(cfg.spawn_boss), str(cfg.mix)])
+
+	if cfg.spawn_boss and not boss_spawned:
 		spawn_boss()
 		boss_spawned = true
 
-	# pastikan spawn_timer autostart tidak ganggu — start manual
 	if not spawn_timer.is_stopped():
 		spawn_timer.stop()
 	spawn_timer.start()
-	_update_wave_label()
 
+	_update_wave_label()
 
 func _spawn_minion_for_current_wave() -> void:
 	var cfg = waves[current_wave_index]

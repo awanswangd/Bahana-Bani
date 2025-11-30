@@ -6,3 +6,4 @@
 script = ExtResource("1_g5net")
 
 [node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Music"

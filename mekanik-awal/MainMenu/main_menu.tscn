@@ -1,0 +1,351 @@
+[gd_scene load_steps=16 format=3 uid="uid://dqg8qdgeoo4s7"]
+
+[ext_resource type="Script" uid="uid://cmm4i56dw2qdq" path="res://MainMenu/main_menu.gd" id="1_fu7sn"]
+[ext_resource type="FontFile" uid="uid://d0amfycor10ee" path="res://MainMenu/fantasy-zone.ttf" id="2_7vrkn"]
+[ext_resource type="AudioStream" uid="uid://dl3sf82gvc55r" path="res://MainMenu/some-ambient-64910.mp3" id="4_jix8l"]
+[ext_resource type="Script" uid="uid://nr48je5dgfb1" path="res://MainMenu/music_volume.gd" id="5_glbon"]
+[ext_resource type="Script" uid="uid://b21dx6fd4ot6a" path="res://MainMenu/sfx_volume.gd" id="5_nlkkf"]
+[ext_resource type="AudioStream" uid="uid://bsrvr08tl3eqq" path="res://MainMenu/EsEfEx.mp3" id="7_qe12f"]
+[ext_resource type="AudioStream" uid="uid://cji6jigveh2aj" path="res://MainMenu/button-202966.mp3" id="8_r0x8f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vrkn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7vrkn"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0.984375, 0.984375, 0.984375, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7sn"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0.667969, 0.667969, 0.667969, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhts7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jix8l"]
+bg_color = Color(0.105882, 0.105882, 0.105882, 0.972549)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0.0898438, 0.0898438, 0.0898438, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 50
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 50
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_glbon"]
+color = Color(0.410156, 0.410156, 0.410156, 1)
+thickness = 3
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_nlkkf"]
+color = Color(0.917969, 0.917969, 0.917969, 1)
+thickness = 3
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_qe12f"]
+color = Color(0.917969, 0.917969, 0.917969, 1)
+
+[node name="main_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fu7sn")
+
+[node name="Background_Img" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Background_Img"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1103.0
+offset_top = -333.0
+offset_right = -514.0
+offset_bottom = -182.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.583543, 0.658824, 0.568456, 1)
+theme_override_colors/font_outline_color = Color(0.258824, 0, 0, 1)
+theme_override_constants/line_spacing = 22
+theme_override_constants/shadow_offset_x = -24
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 30
+theme_override_constants/shadow_outline_size = 12
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 50
+text = "BAHANA BANI"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Main_Buttons" type="VBoxContainer" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -176.0
+offset_top = -375.0
+offset_right = 181.0
+offset_bottom = -204.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = -20
+
+[node name="Start_bttn" type="Button" parent="Main_Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_colors/font_color = Color(0.849621, 0.849621, 0.849621, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7vrkn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
+text = "STORY MODE"
+icon_alignment = 1
+
+[node name="Endless_bttn" type="Button" parent="Main_Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_colors/font_color = Color(0.849621, 0.849621, 0.849621, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7vrkn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
+text = "ENDLESS MODE"
+icon_alignment = 1
+
+[node name="Setting_bttn" type="Button" parent="Main_Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_colors/font_color = Color(0.849621, 0.849621, 0.849621, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7vrkn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
+text = "SETTINGS"
+icon_alignment = 1
+
+[node name="Exit_bttn" type="Button" parent="Main_Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_color = Color(0.849621, 0.849621, 0.849621, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rhts7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rhts7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
+text = "EXIT"
+icon_alignment = 1
+
+[node name="Settings_tab" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -374.5
+offset_top = -241.0
+offset_right = 374.5
+offset_bottom = 241.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jix8l")
+
+[node name="Close_bttn" type="Button" parent="Settings_tab"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_bottom = 45.0
+grow_horizontal = 0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_color = Color(0.849621, 0.849621, 0.849621, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rhts7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rhts7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
+text = "X"
+alignment = 2
+icon_alignment = 1
+
+[node name="Volume Settings" type="VBoxContainer" parent="Settings_tab"]
+layout_mode = 0
+offset_left = 62.5
+offset_top = 60.0
+offset_right = 679.5
+offset_bottom = 169.0
+theme_override_constants/separation = 15
+
+[node name="Music" type="Label" parent="Settings_tab/Volume Settings"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 30
+text = "MUSIC"
+
+[node name="Music_Volume" type="HSlider" parent="Settings_tab/Volume Settings"]
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_glbon")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_nlkkf")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_qe12f")
+max_value = 1.0
+step = 0.02
+value = 0.8
+script = ExtResource("5_glbon")
+audio_bus_name = "Music"
+
+[node name="Sfx" type="Label" parent="Settings_tab/Volume Settings"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 30
+text = "SFX"
+
+[node name="Sfx_Volume" type="HSlider" parent="Settings_tab/Volume Settings"]
+layout_mode = 2
+theme_override_styles/slider = SubResource("StyleBoxLine_glbon")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_nlkkf")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_qe12f")
+max_value = 1.0
+step = 0.2
+value = 0.8
+script = ExtResource("5_nlkkf")
+audio_bus_name = "SFX"
+
+[node name="Notification" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -222.0
+offset_top = -157.0
+offset_right = 277.0
+offset_bottom = 174.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jix8l")
+
+[node name="Close_bttn" type="Button" parent="Notification"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_bottom = 45.0
+grow_horizontal = 0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_color = Color(0.849621, 0.849621, 0.849621, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rhts7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rhts7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
+text = "X"
+alignment = 2
+icon_alignment = 1
+
+[node name="Container" type="VBoxContainer" parent="Notification"]
+layout_mode = 0
+offset_left = -62.5
+offset_top = 116.0
+offset_right = 554.5
+offset_bottom = 225.0
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="Message" type="Label" parent="Notification/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 30
+text = "COMING SOON"
+
+[node name="MainMenu_Ambient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jix8l")
+volume_db = 9.369
+autoplay = true
+bus = &"Music"
+
+[node name="Sfx(sample)" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_qe12f")
+bus = &"SFX"
+
+[node name="Button_Pressed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_r0x8f")
+bus = &"SFX"
+
+[connection signal="pressed" from="Main_Buttons/Start_bttn" to="." method="_on_start_bttn_pressed"]
+[connection signal="pressed" from="Main_Buttons/Endless_bttn" to="." method="_on_endless_bttn_pressed"]
+[connection signal="pressed" from="Main_Buttons/Setting_bttn" to="." method="_on_setting_bttn_pressed"]
+[connection signal="pressed" from="Main_Buttons/Exit_bttn" to="." method="_on_exit_bttn_pressed"]
+[connection signal="pressed" from="Settings_tab/Close_bttn" to="." method="_on_close_bttn_pressed"]
+[connection signal="value_changed" from="Settings_tab/Volume Settings/Music_Volume" to="Settings_tab/Volume Settings/Music_Volume" method="_on_value_changed"]
+[connection signal="value_changed" from="Settings_tab/Volume Settings/Sfx_Volume" to="Settings_tab/Volume Settings/Sfx_Volume" method="_on_value_changed"]
+[connection signal="pressed" from="Notification/Close_bttn" to="." method="_on_close_bttn_pressed"]

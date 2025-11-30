@@ -32,16 +32,16 @@ var active_enemy = null
 var current_letter_index: int = -1
 
 var word_list = [
-	"temambugh"
-	#"kaghai",
-	#"kumbang",
-	#"pedom",
-	#"lapah",
-	#"ghatong",
-	#"lengong",
-	#"ghuccah",
-	#"tebengbang",
-	#"mahu",
+	"temambugh",
+	"kaghai",
+	"kumbang",
+	"pedom",
+	"lapah",
+	"ghatong",
+	"lengong",
+	"ghuccah",
+	"tebengbang",
+	"mahu",
 ]
 var projectile_words = [
 	"po",

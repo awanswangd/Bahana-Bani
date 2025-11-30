@@ -4,6 +4,7 @@ var Enemy = preload("res://enemy.tscn")
 var EnemyArcher = preload("res://enemy_archer.tscn")
 var Projectile = preload("res://projectile.tscn")
 var EnemyBoss = preload("res://enemy_boss.tscn")
+var battle_theme = load("res://audio/bgm/battle_theme.ogg")
 
 var score: int = 0
 var max_hp: int = 5
@@ -31,16 +32,16 @@ var active_enemy = null
 var current_letter_index: int = -1
 
 var word_list = [
-	"temambugh",
-	"kaghai",
-	"kumbang",
-	"pedom",
-	"lapah",
-	"ghatong",
-	"lengong",
-	"ghuccah",
-	"tebengbang",
-	"mahu",
+	"temambugh"
+	#"kaghai",
+	#"kumbang",
+	#"pedom",
+	#"lapah",
+	#"ghatong",
+	#"lengong",
+	#"ghuccah",
+	#"tebengbang",
+	#"mahu",
 ]
 var projectile_words = [
 	"po",
@@ -64,8 +65,8 @@ var spawning: bool = false
 var boss_spawned: bool = false
 var inter_wave_delay_seconds: float = 3.0
 var wave_intro_duration: float = 1.5
+var wave_countdown: int = 0
 
-var battle_theme = load("res://audio/bgm/battle_theme.ogg")
 
 func _ready() -> void:
 	add_to_group("main")
@@ -78,9 +79,8 @@ func _ready() -> void:
 
 	if intro_timer:
 		intro_timer.timeout.connect(_on_intro_timer_timeout)
-		print("IntroTimer connected.")
 	else:
-		print("IntroTimer NOT FOUND! Wave intro timer will be skipped.")
+		pass
 
 	if wave_intro_label:
 		wave_intro_label.hide()
@@ -133,6 +133,8 @@ func find_new_active_enemy(typed_character: String):
 			return
 	
 	for enemy in enemy_container.get_children():
+		if "is_dead" in enemy and enemy.is_dead:
+			continue
 		var prompt = enemy.get_prompt()
 		print("Checking enemy with prompt: '%s'" % prompt)
 		if prompt.is_empty():
@@ -400,95 +402,164 @@ func _update_wave_label() -> void:
 	if wave_label == null:
 		return
 
-	# hitung alive dengan filter node yang belum queued_for_deletion
-	var alive := 0
-	var alive_names := []
-	for c in enemy_container.get_children():
-		# pastikan node valid dan belum dijadwalkan untuk dihapus
-		if not c.is_queued_for_deletion():
-			alive += 1
-			alive_names.append("%s(%s)" % [c.name, c.get_class()])
-
-	# juga periksa projectile secara terpisah (jika mau tampil total)
+	var enemy_alive := 0
 	var proj_alive := 0
-	for p in projectile_container.get_children():
-		if not p.is_queued_for_deletion():
-			proj_alive += 1
-			alive_names.append("%s(%s)" % [p.name, p.get_class()])
+	var debug_lines: Array[String] = []
 
-	var total_alive := alive + proj_alive
+	# HITUNG ENEMY ALIVE: belum queued_free DAN belum is_dead
+	for c in enemy_container.get_children():
+		var queued := c.is_queued_for_deletion()
+		var dead := false
+		if "is_dead" in c:
+			dead = c.is_dead
+
+		if not queued and not dead:
+			enemy_alive += 1
+
+		debug_lines.append("ENEMY %s (%s) queued=%s is_dead=%s" %
+			[c.name, c.get_class(), str(queued), str(dead)])
+
+	# HITUNG PROJECTILE (mereka tidak punya is_dead, cukup queued)
+	for p in projectile_container.get_children():
+		var queuedp := p.is_queued_for_deletion()
+		if not queuedp:
+			proj_alive += 1
+
+		debug_lines.append("PROJ  %s (%s) queued=%s" %
+			[p.name, p.get_class(), str(queuedp)])
+
+	var total_alive := enemy_alive + proj_alive
 	var cfg_name = "-"
 	if current_wave_index < waves.size():
 		cfg_name = waves[current_wave_index].name
-	wave_label.text = "%s | spawn left: %d | alive: %d" % [cfg_name, remaining_to_spawn, total_alive]
-	print("--- WAVE DEBUG: %s — remaining %d — alive_total %d" % [cfg_name, remaining_to_spawn, total_alive])
-	if alive_names.size() > 0:
-		print("Children: ", alive_names)
+
+	wave_label.text = "%s | spawn left: %d | alive: %d" % [
+		cfg_name, remaining_to_spawn, total_alive
+	]
+
+	print("--- WAVE DEBUG: %s — remaining %d — alive_total %d" %
+		[cfg_name, remaining_to_spawn, total_alive])
+
+	for line in debug_lines:
+		print(line)
 
 
 
 func _check_wave_progress() -> void:
-	# debug first
 	print(">> _check_wave_progress() called. wave=%d | remaining_to_spawn=%d | spawning=%s" %
 		[current_wave_index, remaining_to_spawn, str(spawning)])
 
 	_update_wave_label()
 
-	# pertama: jika masih ada yang harus di-spawn, jangan lanjut
+	# 1. Kalau masih ada yang harus di-spawn, jangan lanjut
 	if remaining_to_spawn > 0:
 		print("   -> still have remaining_to_spawn (%d), wait." % remaining_to_spawn)
 		return
 
-	# jika masih spawning (timer mungkin masih aktif), tunggu
+	# 2. Kalau masih flag spawning true, berarti spawn_timer masih kerja
 	if spawning:
 		print("   -> spawning flag true, wait.")
 		return
 
-	# hitung apakah ada enemy/projectile yang valid (belum queued_for_deletion)
-	var any_enemy := false
+	# 3. Cek apakah masih ada entity hidup
+	var any_alive := false
+
+	#   3a. Cek enemy
 	for c in enemy_container.get_children():
-		if not c.is_queued_for_deletion() and not c.is_dead:
-			any_enemy = true
+		var queued := c.is_queued_for_deletion()
+		var dead := false
+		if "is_dead" in c:
+			dead = c.is_dead
+		if not queued and not dead:
+			any_alive = true
 			break
 
-	if not any_enemy:
+	#   3b. Kalau enemy sudah habis, cek projectile
+	if not any_alive:
 		for p in projectile_container.get_children():
-			if not p.is_queued_for_deletion() :
-				any_enemy = true
+			if not p.is_queued_for_deletion():
+				any_alive = true
 				break
 
-	# jika masih ada entity hidup, tunggu
-	if any_enemy:
+	if any_alive:
 		print("   -> there are still alive entities, wait.")
 		return
 
-	# kalau sampai sini: remaining_to_spawn == 0, spawning == false, dan tidak ada entity hidup
+	# 4. Sampai sini: tidak ada yang hidup lagi
 	print("   -> wave %d fully clear." % current_wave_index)
 
 	if current_wave_index < waves.size() - 1:
-		# gunakan deferred untuk aman
 		call_deferred("_start_inter_wave_timer")
 	else:
 		call_deferred("show_win")
 
+
 func _start_inter_wave_timer() -> void:
-	wave_timer.start(inter_wave_delay_seconds)
+	print(">> _start_inter_wave_timer() called. Setting countdown = %f seconds" % inter_wave_delay_seconds)
+
+	if game_state != GameState.PLAYING:
+		print("   -> game_state bukan PLAYING, batal mulai inter-wave timer.")
+		return
+
+	if current_wave_index >= waves.size() - 1:
+		print("   -> sudah di wave terakhir, langsung show_win()")
+		show_win()
+		return
+
+	# inisialisasi countdown
+	wave_countdown = int(inter_wave_delay_seconds)
+	if wave_countdown <= 0:
+		wave_countdown = 1
+
+	# set WaveTimer menjadi timer 1 detik berulang
+	if wave_timer:
+		wave_timer.stop()
+		wave_timer.wait_time = 1.0
+		wave_timer.one_shot = false
+		wave_timer.start()
+		print("   -> WaveTimer started for countdown, wait_time=1, one_shot=false")
+	else:
+		print("   !! wave_timer is NULL, tidak bisa start countdown !!")
+
 	if wave_label:
-		wave_label.text = "Wave complete — next in %ds" % int(inter_wave_delay_seconds)
+		wave_label.text = "Wave complete — next in %ds" % wave_countdown
 
 func _on_wave_timer_timeout() -> void:
-	print(">> WaveTimer timeout fired (current_wave_index=%d)" % current_wave_index)
-	# safety: kalau game over / last wave -> ignore
+	print(">> WaveTimer TIMEOUT (countdown) fired. current_wave_index=%d, wave_countdown=%d" %
+		[current_wave_index, wave_countdown])
+
 	if game_state != GameState.PLAYING:
+		print("   -> game_state=%s, stop WaveTimer." % str(game_state))
+		wave_timer.stop()
 		return
+
+	# turunkan countdown
+	wave_countdown -= 1
+
+	# kalau masih ada sisa detik, update label dan tunggu tick berikutnya
+	if wave_countdown > 0:
+		if wave_label:
+			wave_label.text = "Wave complete — next in %ds" % wave_countdown
+		print("   -> countdown now %d, wait next tick." % wave_countdown)
+		return
+
+	# countdown habis
+	print("   -> countdown finished, stop WaveTimer and start next wave.")
+	wave_timer.stop()
+
+	# safety: cek lagi indeks wave
 	if current_wave_index >= waves.size() - 1:
+		print("   -> sudah di wave terakhir, panggil show_win()")
 		show_win()
 		return
 
 	current_wave_index += 1
+	print("   -> Moving to next wave: %d" % current_wave_index)
+
 	if current_wave_index < waves.size():
 		start_wave(current_wave_index)
 	else:
+		print("   -> index out of range setelah increment, panggil show_win() sebagai fallback.")
 		show_win()
 
 func reset_active_enemy():

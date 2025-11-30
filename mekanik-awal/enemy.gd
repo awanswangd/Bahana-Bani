@@ -48,4 +48,7 @@ func die():
 	is_dead = true
 	$AnimatedSprite2D.play("death")
 	await $AnimatedSprite2D.animation_finished
+	var main = get_tree().get_first_node_in_group("main")
+	if main and main.active_enemy == self:
+		main.reset_active_enemy()
 	queue_free()

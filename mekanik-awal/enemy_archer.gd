@@ -17,7 +17,6 @@ var is_animating_death: bool = false
 func _ready() -> void:
 	add_to_group("enemy")
 	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
-	sprite.animation_finished.connect(_on_animation_finished)
 
 
 func _physics_process(delta: float) -> void:
@@ -73,9 +72,7 @@ func die():
 	is_dead = true
 	$AnimatedSprite2D.play("death")
 	await $AnimatedSprite2D.animation_finished
+	var main = get_tree().get_first_node_in_group("main")
+	if main and main.active_enemy == self:
+		main.reset_active_enemy()
 	queue_free()
-
-
-func _on_animation_finished() -> void:
-	if sprite.animation == "death":
-		queue_free()

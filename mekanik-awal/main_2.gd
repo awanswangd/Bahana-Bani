@@ -55,7 +55,7 @@ var projectile_words = [
 
 var waves = [
 	{ "name":"Wave 1", "minion_count":5, "spawn_boss": false, "mix": false },
-	{ "name":"Wave 2", "minion_count":5, "spawn_boss": false, "mix": true  },
+	{ "name":"Wave 2", "minion_count":10, "spawn_boss": false, "mix": true  },
 	{ "name":"Wave 3", "minion_count":10, "spawn_boss": true,  "mix": true  }
 ]
 
@@ -101,6 +101,7 @@ func player_hit() -> void:
 func game_over() -> void:
 	game_state = GameState.GAME_OVER
 	print("GAME OVER")
+	SoundManager.stop_music()
 	SoundManager.play_sfx("lose")
 	spawn_timer.stop()
 	for enemy in enemy_container.get_children():
@@ -386,7 +387,7 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 
 func show_win() -> void:
 	print("STORY 2 CLEAR — FINAL WIN")
-
+	SoundManager.stop_music()
 	SoundManager.play_sfx("win")
 
 	game_state = GameState.GAME_OVER

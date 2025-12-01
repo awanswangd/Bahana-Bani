@@ -101,6 +101,7 @@ func player_hit() -> void:
 func game_over() -> void:
 	game_state = GameState.GAME_OVER
 	print("GAME OVER")
+	SoundManager.stop_music()
 	SoundManager.play_sfx("lose")
 	spawn_timer.stop()
 	for enemy in enemy_container.get_children():
@@ -387,6 +388,7 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 func show_win() -> void:
 	# Story 1: semua wave sudah clear, lanjut ke Story 2 (cutscene)
 	print("STORY 1 CLEAR — go to Story 2 cutscene")
+	SoundManager.stop_music()
 	SoundManager.play_sfx("win")
 
 	game_state = GameState.GAME_OVER

@@ -30,7 +30,11 @@ func play_music(music_stream: AudioStream):
 	bgm_player.autoplay = true
 	
 	bgm_player.play()
-	
+
+func stop_music() -> void:
+	if bgm_player and bgm_player.playing:
+		bgm_player.stop()
+
 # Pemutar sfx
 func play_sfx(sound_name: String):
 	# Periksa sfx

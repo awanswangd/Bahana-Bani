@@ -3,7 +3,7 @@ extends Node2D
 @export var blue: Color = Color("#4682b4")
 @export var green: Color = Color("#FFFFFF")
 @export var red: Color = Color("#FFFFFF")
-@export var speed: float = 2
+@export var speed: float =1.5
 @onready var prompt = $RichTextLabel
 @onready var sprite = $AnimatedSprite2D
 @export var is_dead: bool = false

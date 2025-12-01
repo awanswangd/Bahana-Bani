@@ -9,8 +9,8 @@ var is_animating_death: bool = false
 @export var speed: float = 1
 @export var words: Array[String] = [
 	"aku bossnya",
-	"segitu aja gk cukup",
-	"serangan terakhir power"
+	"ini testing",
+	"serangan terakhir"
 ]
 
 @onready var prompt: RichTextLabel = $RichTextLabel

@@ -4,7 +4,7 @@ extends Node2D
 @export var green: Color = Color("#ffffffff")
 @export var red: Color = Color("#ffffffff")
 
-@export var speed: float = 200.0  # panah lebih cepat dari musuh biasa
+@export var speed: float = 100.0 
 
 @onready var prompt: RichTextLabel = $RichTextLabel
 

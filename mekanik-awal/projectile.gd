@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var blue: Color = Color("#4682b4")
-@export var green: Color = Color("#639765")
-@export var red: Color = Color("#a65455")
+@export var green: Color = Color("#ffffffff")
+@export var red: Color = Color("#ffffffff")
 
 @export var speed: float = 200.0  # panah lebih cepat dari musuh biasa
 

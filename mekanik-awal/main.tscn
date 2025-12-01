@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4t1mwoac3b5s"]
+[gd_scene load_steps=9 format=3 uid="uid://b4t1mwoac3b5s"]
 
 [ext_resource type="Script" uid="uid://qijs1shf4r7t" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://ctcawoigrn5eh" path="res://Asset/Background/WhatsApp Image 2025-11-30 at 11.06.43.jpeg" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://dvaqavvas4jw0" path="res://Pause_Menu.tscn" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://d1wfy42x057kh" path="res://player.tscn" id="3_1bvp3"]
 [ext_resource type="FontFile" uid="uid://cbohj6gog6nmy" path="res://gloriahallelujah.ttf" id="4_lquwl"]
 
@@ -15,6 +16,9 @@ size = Vector2(133.5, 657)
 
 [node name="Main_Story1" type="Node2D"]
 script = ExtResource("1_1bvp3")
+
+[node name="PauseMenu" parent="." instance=ExtResource("2_lquwl")]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = 15

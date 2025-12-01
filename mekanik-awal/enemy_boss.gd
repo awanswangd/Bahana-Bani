@@ -6,7 +6,7 @@ extends Node2D
 @export var is_dead: bool = false
 var is_animating_death: bool = false
 @onready var sprite = $AnimatedSprite2D
-@export var speed: float = 1.5
+@export var speed: float = 1
 @export var words: Array[String] = [
 	"aku bossnya",
 	"segitu aja gk cukup",

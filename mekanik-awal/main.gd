@@ -27,6 +27,8 @@ var restart_index: int = 0
 @onready var gameover_label = $CanvasLayer/GameOverLabel
 @onready var intro_timer: Timer = $IntroTimer
 @onready var wave_intro_label: Label = $CanvasLayer/WaveIntroLabel
+@onready var pause_menu = $PauseMenu
+
 
 var active_enemy = null
 var current_letter_index: int = -1
@@ -149,6 +151,12 @@ func find_new_active_enemy(typed_character: String):
 			return
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.is_pressed():
+		if event.keycode == KEY_ESCAPE:
+			if game_state != GameState.GAME_OVER:
+				_toggle_pause()
+			return
+	
 	if event is InputEventKey and not event.is_pressed():
 		var key_typed = event.as_text().to_lower()
 		if key_typed == "":
@@ -577,3 +585,14 @@ func _on_wave_timer_timeout() -> void:
 func reset_active_enemy():
 	active_enemy = null
 	current_letter_index = -1
+
+func _toggle_pause() -> void:
+	if get_tree().paused:
+		get_tree().paused = false
+		if pause_menu:
+			pause_menu.hide_pause()
+	else:
+		get_tree().paused = true
+		SoundManager.stop_music()
+		if pause_menu:
+			pause_menu.show_pause()

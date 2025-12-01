@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bk0vg727mrlem"]
+[gd_scene load_steps=9 format=3 uid="uid://bk0vg727mrlem"]
 
 [ext_resource type="Script" uid="uid://c7c8s8orch6r7" path="res://main_2.gd" id="1_3yxjw"]
 [ext_resource type="Texture2D" uid="uid://cwuqeud5lffmo" path="res://Asset/Background/WhatsApp Image 2025-11-30 at 11.00.59.jpeg" id="2_3yxjw"]
 [ext_resource type="PackedScene" uid="uid://d1wfy42x057kh" path="res://player.tscn" id="3_sck4r"]
 [ext_resource type="FontFile" uid="uid://cbohj6gog6nmy" path="res://gloriahallelujah.ttf" id="4_1mhn8"]
+[ext_resource type="PackedScene" uid="uid://dvaqavvas4jw0" path="res://Pause_Menu.tscn" id="5_elgsa"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
 bg_color = Color(0.0728426, 0.0728426, 0.0728426, 0.443137)
@@ -145,6 +146,9 @@ one_shot = true
 [node name="IntroTimer" type="Timer" parent="."]
 wait_time = 1.509
 one_shot = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_elgsa")]
+visible = false
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="area_entered" from="PlayerLine" to="." method="_on_player_line_area_entered"]

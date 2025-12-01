@@ -60,7 +60,7 @@ var minions_increment_per_wave := 1     # tiap wave nambah berapa musuh
 var max_minions_per_wave := 25          # batas maksimal musuh per wave
 var boss_wave_interval := 5             # tiap berapa wave muncul boss (0 = tidak pernah)
 var enemy_speed_multiplier: float = 1.0   # multiplier awal (1x speed normal)
-var enemy_speed_increment: float = 0.05   # nambah tiap 1 musuh mati (5%)
+var enemy_speed_increment: float = 0.1   # nambah tiap 1 musuh mati (5%)
 var total_kills: int = 0                  # cuma buat debug / info
 
 func register_enemy_kill() -> void:

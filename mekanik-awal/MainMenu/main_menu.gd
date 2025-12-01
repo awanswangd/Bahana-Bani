@@ -16,7 +16,7 @@ func _process(delta):
 
 func _on_start_bttn_pressed() -> void:
 	button_pressed.play()
-	Transition.change_scene_to_file("res://main.tscn")
+	Transition.change_scene_to_file("res://cutscene_story_1.tscn")
 
 func _on_endless_bttn_pressed() -> void:
 	button_pressed.play()

@@ -385,8 +385,8 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 		return
 
 func show_win() -> void:
-	# Story 1: semua wave sudah clear, lanjut ke Story 2 (cutscene)
-	print("STORY 1 CLEAR — go to Story 2 cutscene")
+	print("STORY 2 CLEAR — FINAL WIN")
+
 	SoundManager.play_sfx("win")
 
 	game_state = GameState.GAME_OVER
@@ -399,8 +399,7 @@ func show_win() -> void:
 	for proj in projectile_container.get_children():
 		proj.queue_free()
 
-	# langsung ganti scene ke cutscene Story 2
-	Transition.change_scene_to_file("res://cutscene_story_2.tscn")
+	Transition.change_scene_to_file("res://MainMenu/main_menu.tscn")
 
 func _update_wave_label() -> void:
 	if wave_label == null:

@@ -53,11 +53,39 @@ var projectile_words = [
 	"xo"
 ]
 
-var waves = [
-	{ "name":"Wave 1", "minion_count":5, "spawn_boss": false, "mix": false },
-	{ "name":"Wave 2", "minion_count":10, "spawn_boss": false, "mix": true  },
-	{ "name":"Wave 3", "minion_count":10, "spawn_boss": true,  "mix": true  }
-]
+var base_minions_per_wave := 5          # jumlah musuh di awal wave 1
+var minions_increment_per_wave := 1     # tiap wave nambah berapa musuh
+var max_minions_per_wave := 25          # batas maksimal musuh per wave
+var boss_wave_interval := 5             # tiap berapa wave muncul boss (0 = tidak pernah)
+var enemy_speed_multiplier: float = 1.0   # multiplier awal (1x speed normal)
+var enemy_speed_increment: float = 0.05   # nambah tiap 1 musuh mati (5%)
+var total_kills: int = 0                  # cuma buat debug / info
+
+func register_enemy_kill() -> void:
+	total_kills += 1
+	enemy_speed_multiplier += enemy_speed_increment
+	print("Kill %d -> enemy_speed_multiplier = %.2f" % [total_kills, enemy_speed_multiplier])
+
+func get_enemy_speed_multiplier() -> float:
+	return enemy_speed_multiplier
+
+func get_wave_config(index: int) -> Dictionary:
+	var wave_number := index + 1
+
+	var minions := base_minions_per_wave + minions_increment_per_wave * index
+	minions = min(minions, max_minions_per_wave)
+
+	var mix := wave_number >= 2
+	var spawn_boss := false
+	if boss_wave_interval > 0 and wave_number % boss_wave_interval == 0:
+		spawn_boss = true
+
+	return {
+		"name": "Wave %d" % wave_number,
+		"minion_count": minions,
+		"mix": mix,
+		"spawn_boss": spawn_boss
+	}
 
 var current_wave_index: int = 0
 var remaining_to_spawn: int = 0
@@ -180,13 +208,20 @@ func _unhandled_input(event: InputEvent) -> void:
 						SoundManager.play_sfx("correct")
 					add_score(100)
 					current_letter_index = -1
+					var was_enemy := false
+					if active_enemy != null and active_enemy.is_in_group("enemy"):
+						was_enemy = true
+					# BOSS pakai multi-phase
 					if active_enemy != null and active_enemy.is_in_group("boss") and active_enemy.has_method("on_word_completed"):
 						active_enemy.on_word_completed()
 					else:
+						# musuh biasa / projectile
 						if active_enemy != null and active_enemy.has_method("die"):
 							active_enemy.die()
 						else:
 							active_enemy.queue_free()
+					if was_enemy:
+						register_enemy_kill()  # termasuk boss phase juga, kalau kamu oke
 					active_enemy = null
 					call_deferred("_check_wave_progress")
 			else:
@@ -270,12 +305,11 @@ func spawn_projectile_at(pos: Vector2) -> void:
 	SoundManager.play_sfx("enemy_projectile")
 
 func start_wave(index: int) -> void:
-	if index < 0 or index >= waves.size():
+	if index < 0:
 		return
 
-	var cfg = waves[index]
+	var cfg = get_wave_config(index)
 
-	# set status wave
 	current_wave_index = index
 	remaining_to_spawn = cfg.minion_count
 	spawning = false
@@ -284,7 +318,6 @@ func start_wave(index: int) -> void:
 	print(">> start_wave: %s (index=%d) — minions=%d | spawn_boss=%s | mix=%s (spawning will begin after intro)" %
 		[cfg.name, index, remaining_to_spawn, str(cfg.spawn_boss), str(cfg.mix)])
 
-	# pastikan spawn_timer nggak jalan dulu
 	if not spawn_timer.is_stopped():
 		spawn_timer.stop()
 
@@ -293,8 +326,8 @@ func start_wave(index: int) -> void:
 
 func _show_wave_intro(index: int) -> void:
 	if wave_intro_label:
-		var cfg_name = waves[index].name if index < waves.size() else "Wave ?"
-		wave_intro_label.text = cfg_name
+		var cfg = get_wave_config(index)
+		wave_intro_label.text = cfg.name
 		wave_intro_label.show()
 
 	intro_timer.start(wave_intro_duration)
@@ -310,7 +343,7 @@ func _on_intro_timer_timeout() -> void:
 		return
 
 	# mulai spawning untuk wave aktif
-	var cfg = waves[current_wave_index]
+	var cfg = get_wave_config(current_wave_index)
 	spawning = true
 	remaining_to_spawn = cfg.minion_count
 
@@ -328,7 +361,7 @@ func _on_intro_timer_timeout() -> void:
 	_update_wave_label()
 
 func _spawn_minion_for_current_wave() -> void:
-	var cfg = waves[current_wave_index]
+	var cfg = get_wave_config(current_wave_index)
 	var enemy_instance: Node2D
 	print("   -> spawning one minion for wave %d (mix=%s)" % [current_wave_index, str(cfg.mix)])
 	# kalau mix true -> kesempatan jadi archer; else always basic
@@ -374,10 +407,12 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 			active_enemy = null
 			current_letter_index = -1
 		obj.queue_free()
+		register_enemy_kill() 
 		call_deferred("_check_wave_progress")
 		if hp == 0:
 			game_over()
 		return
+
 	if obj.is_in_group("projectile"):
 		hp -= 1
 		SoundManager.play_sfx("hit")
@@ -394,7 +429,8 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 		return
 
 func show_win() -> void:
-	print("STORY 2 CLEAR — FINAL WIN")
+	# Story 1: semua wave sudah clear, lanjut ke Story 2 (cutscene)
+	print("STORY 1 CLEAR — go to Story 2 cutscene")
 	SoundManager.stop_music()
 	SoundManager.play_sfx("win")
 
@@ -408,7 +444,8 @@ func show_win() -> void:
 	for proj in projectile_container.get_children():
 		proj.queue_free()
 
-	Transition.change_scene_to_file("res://MainMenu/main_menu.tscn")
+	# langsung ganti scene ke cutscene Story 2
+	Transition.change_scene_to_file("res://cutscene_story_2.tscn")
 
 func _update_wave_label() -> void:
 	if wave_label == null:
@@ -441,9 +478,10 @@ func _update_wave_label() -> void:
 			[p.name, p.get_class(), str(queuedp)])
 
 	var total_alive := enemy_alive + proj_alive
-	var cfg_name = "-"
-	if current_wave_index < waves.size():
-		cfg_name = waves[current_wave_index].name
+	var cfg_name := "-"
+	if current_wave_index >= 0:
+		var cfg = get_wave_config(current_wave_index)
+		cfg_name = cfg.name
 
 	wave_label.text = "%s | spawn left: %d | alive: %d" % [
 		cfg_name, remaining_to_spawn, total_alive
@@ -454,7 +492,6 @@ func _update_wave_label() -> void:
 
 	for line in debug_lines:
 		print(line)
-
 
 
 func _check_wave_progress() -> void:
@@ -499,11 +536,7 @@ func _check_wave_progress() -> void:
 
 	# 4. Sampai sini: tidak ada yang hidup lagi
 	print("   -> wave %d fully clear." % current_wave_index)
-
-	if current_wave_index < waves.size() - 1:
-		call_deferred("_start_inter_wave_timer")
-	else:
-		call_deferred("show_win")
+	call_deferred("_start_inter_wave_timer")
 
 
 func _start_inter_wave_timer() -> void:
@@ -511,11 +544,6 @@ func _start_inter_wave_timer() -> void:
 
 	if game_state != GameState.PLAYING:
 		print("   -> game_state bukan PLAYING, batal mulai inter-wave timer.")
-		return
-
-	if current_wave_index >= waves.size() - 1:
-		print("   -> sudah di wave terakhir, langsung show_win()")
-		show_win()
 		return
 
 	# inisialisasi countdown
@@ -559,20 +587,10 @@ func _on_wave_timer_timeout() -> void:
 	print("   -> countdown finished, stop WaveTimer and start next wave.")
 	wave_timer.stop()
 
-	# safety: cek lagi indeks wave
-	if current_wave_index >= waves.size() - 1:
-		print("   -> sudah di wave terakhir, panggil show_win()")
-		show_win()
-		return
-
 	current_wave_index += 1
 	print("   -> Moving to next wave: %d" % current_wave_index)
 
-	if current_wave_index < waves.size():
-		start_wave(current_wave_index)
-	else:
-		print("   -> index out of range setelah increment, panggil show_win() sebagai fallback.")
-		show_win()
+	start_wave(current_wave_index)
 
 func reset_active_enemy():
 	active_enemy = null

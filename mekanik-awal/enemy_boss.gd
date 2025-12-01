@@ -16,6 +16,7 @@ var is_animating_death: bool = false
 @onready var prompt: RichTextLabel = $RichTextLabel
 @onready var phase_timer: Timer = $PhaseTimer
 
+var is_phase_wait: bool = false
 var current_word_index: int = 0
 var i = 1
 
@@ -27,14 +28,25 @@ func _ready() -> void:
 
 	_show_current_word()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta):
 	if is_dead:
 		return
 
-	global_position.x -= speed
+	if is_phase_wait:
+		if sprite.is_playing():
+			sprite.stop()
+		return
+
+	var final_speed := speed
+
+	# cari node "main" (bisa main.gd atau main_endless.gd)
+	var main = get_tree().get_first_node_in_group("main")
+	if main and main.has_method("get_enemy_speed_multiplier"):
+		final_speed *= main.get_enemy_speed_multiplier()
+
+	global_position.x -= final_speed
 	if not sprite.is_playing():
 		sprite.play("flight")
-
 
 func _show_current_word() -> void:
 	if current_word_index < words.size():
@@ -75,15 +87,17 @@ func on_word_completed() -> void:
 
 	if current_word_index >= words.size():
 		print("Boss defeated!")
-		queue_free()
+		die()
 	else:
 		print("Boss phase %d complete, waiting 3s..." % current_word_index)
 		prompt.text = ""
+		is_phase_wait = true
 		phase_timer.start()
 
 func _on_phase_timer_timeout() -> void:
 	_show_current_word()
 	i = current_word_index
+	is_phase_wait = false  
 
 func die():
 	is_dead = true

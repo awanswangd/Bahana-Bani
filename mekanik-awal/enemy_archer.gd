@@ -13,21 +13,27 @@ var is_animating_death: bool = false
 @onready var shoot_timer: Timer = $ShootTimer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D   
 
-
 func _ready() -> void:
 	add_to_group("enemy")
 	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
 
-
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return  
+
+	var final_speed := speed
+	var main = get_tree().get_first_node_in_group("main")
+	if main and main.has_method("get_enemy_speed_multiplier"):
+		final_speed *= main.get_enemy_speed_multiplier()
+
 	if global_position.x > stop_x:
-		global_position.x -= speed
+		global_position.x -= final_speed
 	else:
 		global_position.x = stop_x
+
 	if not sprite.is_playing():
 		sprite.play("flight")
+
 
 func get_prompt() -> String:
 	return prompt.text
@@ -65,8 +71,6 @@ func _on_shoot_timer_timeout() -> void:
 		return
 
 	main.spawn_projectile_at(global_position + shoot_offset)
-
-
 
 func die():
 	is_dead = true

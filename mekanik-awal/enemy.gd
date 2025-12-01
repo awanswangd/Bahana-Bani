@@ -9,8 +9,6 @@ extends Node2D
 @export var is_dead: bool = false
 var is_animating_death: bool = false
 
-
-
 func _ready() -> void:
 	add_to_group("enemy")
 
@@ -18,7 +16,13 @@ func _physics_process(delta):
 	if is_dead:
 		return
 
-	global_position.x -= speed
+	var final_speed := speed
+
+	var main = get_tree().get_first_node_in_group("main")
+	if main and main.has_method("get_enemy_speed_multiplier"):
+		final_speed *= main.get_enemy_speed_multiplier()
+
+	global_position.x -= final_speed
 	if not sprite.is_playing():
 		sprite.play("flight")
 

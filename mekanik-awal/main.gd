@@ -74,17 +74,16 @@ func _ready() -> void:
 	update_hp_display()
 	score_label.text = "SCORE: %d" % score
 
-	wave_timer.timeout.connect(_on_wave_timer_timeout)
-	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
-
+	if not wave_timer.timeout.is_connected(_on_wave_timer_timeout):
+		wave_timer.timeout.connect(_on_wave_timer_timeout)
+	if not spawn_timer.timeout.is_connected(_on_spawn_timer_timeout):
+		spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 	if intro_timer:
 		intro_timer.timeout.connect(_on_intro_timer_timeout)
 	else:
 		pass
-
 	if wave_intro_label:
 		wave_intro_label.hide()
-
 	start_wave(current_wave_index)
 	SoundManager.play_music(battle_theme)
 
@@ -177,10 +176,15 @@ func _unhandled_input(event: InputEvent) -> void:
 						SoundManager.play_sfx("correct")
 					add_score(100)
 					current_letter_index = -1
-					if active_enemy != null and active_enemy.has_method("die"):
-						active_enemy.die()
+					if active_enemy != null and active_enemy.is_in_group("boss") and active_enemy.has_method("on_word_completed"):
+						# BOSS: pakai sistem multi-phase
+						active_enemy.on_word_completed()
 					else:
-						active_enemy.queue_free()
+						# musuh biasa / projectile
+						if active_enemy != null and active_enemy.has_method("die"):
+							active_enemy.die()
+						else:
+							active_enemy.queue_free()
 					active_enemy = null
 					call_deferred("_check_wave_progress")
 			else:
@@ -355,6 +359,8 @@ func spawn_boss() -> void:
 	boss_instance.global_position = spawns[index].global_position
 
 func _on_player_line_area_entered(area: Area2D) -> void:
+	if game_state != GameState.PLAYING:
+		return
 	var obj = area.get_parent()
 	if obj.is_in_group("enemy"):
 		hp -= 1

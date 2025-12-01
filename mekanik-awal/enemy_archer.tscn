@@ -140,5 +140,5 @@ position = Vector2(-2.28753, -0.821731)
 shape = SubResource("CircleShape2D_4gyqm")
 
 [node name="ShootTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 1.5
 autostart = true

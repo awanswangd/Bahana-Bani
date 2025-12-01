@@ -1,0 +1,151 @@
+[gd_scene load_steps=8 format=3 uid="uid://ttdjxtppgh3b"]
+
+[ext_resource type="Script" uid="uid://bletu57ntws2a" path="res://main_endless.gd" id="1_d1sac"]
+[ext_resource type="Texture2D" uid="uid://ctcawoigrn5eh" path="res://Asset/Background/WhatsApp Image 2025-11-30 at 11.06.43.jpeg" id="2_dcpx8"]
+[ext_resource type="PackedScene" uid="uid://d1wfy42x057kh" path="res://player.tscn" id="3_udm53"]
+[ext_resource type="FontFile" uid="uid://cbohj6gog6nmy" path="res://gloriahallelujah.ttf" id="4_l4kvc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
+bg_color = Color(0.0728426, 0.0728426, 0.0728426, 0.443137)
+
+[sub_resource type="SystemFont" id="SystemFont_1bvp3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(133.5, 657)
+
+[node name="Main_Endless" type="Node2D"]
+script = ExtResource("1_d1sac")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = 1161.0
+offset_bottom = 654.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dcpx8")
+flip_h = true
+
+[node name="Player" parent="." instance=ExtResource("3_udm53")]
+position = Vector2(34, 250)
+scale = Vector2(4, 4)
+
+[node name="SpawnContainer" type="Node2D" parent="."]
+
+[node name="Marker2D2" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1170, 170)
+
+[node name="Marker2D3" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1166, 318)
+
+[node name="Marker2D4" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1162, 441)
+
+[node name="Marker2D5" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1160, 591)
+
+[node name="enemycontainer" type="Node2D" parent="."]
+position = Vector2(-8, 4)
+
+[node name="ProjectileContainer" type="Node2D" parent="."]
+position = Vector2(1176, 240)
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 3.018
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -59.0
+offset_top = 5.0
+offset_right = 96.0
+offset_bottom = 65.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_l4kvc")
+theme_override_font_sizes/font_size = 29
+text = "SCORE: 0"
+metadata/_edit_use_anchors_ = true
+
+[node name="HPLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -174.0
+offset_right = 155.0
+offset_bottom = -114.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_l4kvc")
+theme_override_font_sizes/font_size = 29
+text = "HP :"
+metadata/_edit_use_anchors_ = true
+
+[node name="GameOverLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_l4kvc")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_1bvp3")
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WaveLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -25.5
+offset_top = -57.0
+offset_right = 25.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_l4kvc")
+theme_override_font_sizes/font_size = 28
+text = "tes"
+
+[node name="WaveIntroLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = SubResource("SystemFont_1bvp3")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerLine" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerLine"]
+position = Vector2(-65, 327)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="WaveTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="IntroTimer" type="Timer" parent="."]
+wait_time = 1.509
+one_shot = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="area_entered" from="PlayerLine" to="." method="_on_player_line_area_entered"]
+[connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]

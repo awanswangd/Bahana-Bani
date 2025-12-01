@@ -20,8 +20,7 @@ func _on_start_bttn_pressed() -> void:
 
 func _on_endless_bttn_pressed() -> void:
 	button_pressed.play()
-	main_buttons.visible = false
-	notification.visible = true
+	Transition.change_scene_to_file("res://main_endless.tscn")
 
 func _on_setting_bttn_pressed() -> void:
 	button_pressed.play()

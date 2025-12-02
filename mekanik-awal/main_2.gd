@@ -374,7 +374,8 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 	var obj = area.get_parent()
 	if obj.is_in_group("enemy"):
 		hp -= 1
-		SoundManager.play_sfx("hit")
+		if hp > 0:
+			SoundManager.play_sfx("hit")
 		if hp < 0:
 			hp = 0
 		update_hp_display()
@@ -388,7 +389,8 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 		return
 	if obj.is_in_group("projectile"):
 		hp -= 1
-		SoundManager.play_sfx("hit")
+		if hp > 0:
+			SoundManager.play_sfx("hit")
 		if hp < 0:
 			hp = 0
 		update_hp_display()

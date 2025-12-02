@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b55psgbpbmh2d"
-path="res://.godot/imported/Archer.png-410242eda9ab529a197f91901a8ae22e.ctex"
+uid="uid://bov148wpepqnk"
+path="res://.godot/imported/Archer stop run-Sheet.png-75e91a860eb09901468a7b5e141506b2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/Sprite/Archer.png"
-dest_files=["res://.godot/imported/Archer.png-410242eda9ab529a197f91901a8ae22e.ctex"]
+source_file="res://Asset/Sprite/Archer stop run-Sheet.png"
+dest_files=["res://.godot/imported/Archer stop run-Sheet.png-75e91a860eb09901468a7b5e141506b2.ctex"]
 
 [params]
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://bte6jakpixd0v"]
+[gd_scene load_steps=28 format=3 uid="uid://bte6jakpixd0v"]
 
 [ext_resource type="Script" uid="uid://bryehlb8lltxd" path="res://enemy_boss.gd" id="1_ka1vu"]
+[ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="2_gr8om"]
 [ext_resource type="Texture2D" uid="uid://37s6bubcaoq0" path="res://Asset/Sprite/boss sheet.png" id="2_ka1vu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gr8om"]
@@ -189,12 +190,13 @@ script = ExtResource("1_ka1vu")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 clip_contents = false
-offset_left = -7.85382
-offset_top = -34.9565
-offset_right = 47.1461
-offset_bottom = -14.9564
+offset_left = -8.13345
+offset_top = -15.6129
+offset_right = 46.8665
+offset_bottom = 4.38721
 scale = Vector2(0.25, 0.25)
 size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("2_gr8om")
 theme_override_font_sizes/mono_font_size = 87
 theme_override_font_sizes/normal_font_size = 45
 bbcode_enabled = true

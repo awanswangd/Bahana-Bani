@@ -1,15 +1,36 @@
-[gd_scene load_steps=9 format=3 uid="uid://bk0vg727mrlem"]
+[gd_scene load_steps=15 format=3 uid="uid://bk0vg727mrlem"]
 
 [ext_resource type="Script" uid="uid://c7c8s8orch6r7" path="res://main_2.gd" id="1_3yxjw"]
 [ext_resource type="Texture2D" uid="uid://cwuqeud5lffmo" path="res://Asset/Background/WhatsApp Image 2025-11-30 at 11.00.59.jpeg" id="2_3yxjw"]
 [ext_resource type="PackedScene" uid="uid://d1wfy42x057kh" path="res://player.tscn" id="3_sck4r"]
 [ext_resource type="FontFile" uid="uid://cbohj6gog6nmy" path="res://gloriahallelujah.ttf" id="4_1mhn8"]
 [ext_resource type="PackedScene" uid="uid://dvaqavvas4jw0" path="res://Pause_Menu.tscn" id="5_elgsa"]
+[ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="5_sck4r"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1mhn8"]
+font = ExtResource("5_sck4r")
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_0rof8"]
+font = ExtResource("5_sck4r")
+font_size = 25
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
 bg_color = Color(0.0728426, 0.0728426, 0.0728426, 0.443137)
 
+[sub_resource type="LabelSettings" id="LabelSettings_sck4r"]
+font = ExtResource("5_sck4r")
+font_size = 60
+
+[sub_resource type="LabelSettings" id="LabelSettings_w8cd7"]
+font = ExtResource("5_sck4r")
+font_size = 25
+
 [sub_resource type="SystemFont" id="SystemFont_1bvp3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l8hla"]
+font = ExtResource("5_sck4r")
+font_size = 70
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
 size = Vector2(133.5, 657)
@@ -73,6 +94,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_1mhn8")
 theme_override_font_sizes/font_size = 29
 text = "SCORE: 0"
+label_settings = SubResource("LabelSettings_1mhn8")
 metadata/_edit_use_anchors_ = true
 
 [node name="HPLabel" type="Label" parent="CanvasLayer"]
@@ -88,6 +110,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_1mhn8")
 theme_override_font_sizes/font_size = 29
 text = "HP :"
+label_settings = SubResource("LabelSettings_0rof8")
 metadata/_edit_use_anchors_ = true
 
 [node name="GameOverLabel" type="Label" parent="CanvasLayer"]
@@ -103,6 +126,7 @@ theme_override_fonts/font = ExtResource("4_1mhn8")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_1bvp3")
 text = "Game Over"
+label_settings = SubResource("LabelSettings_sck4r")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -120,6 +144,7 @@ grow_vertical = 0
 theme_override_fonts/font = ExtResource("4_1mhn8")
 theme_override_font_sizes/font_size = 28
 text = "tes"
+label_settings = SubResource("LabelSettings_w8cd7")
 
 [node name="WaveIntroLabel" type="Label" parent="CanvasLayer"]
 visible = false
@@ -131,6 +156,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = SubResource("SystemFont_1bvp3")
 theme_override_font_sizes/font_size = 100
+label_settings = SubResource("LabelSettings_l8hla")
 horizontal_alignment = 1
 vertical_alignment = 1
 

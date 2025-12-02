@@ -1,7 +1,8 @@
-[gd_scene load_steps=40 format=3 uid="uid://ckxc6a4jr0xeo"]
+[gd_scene load_steps=41 format=3 uid="uid://ckxc6a4jr0xeo"]
 
 [ext_resource type="Shader" uid="uid://dciokyq6dqyx8" path="res://outline.gdshader" id="1_7oore"]
 [ext_resource type="Script" uid="uid://dfy4upaxjy6y8" path="res://enemy_archer.gd" id="1_ehv12"]
+[ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="3_jpg52"]
 [ext_resource type="Texture2D" uid="uid://d38u3q8nkghw7" path="res://Asset/Sprite/Archn-Sheet.png" id="3_x37ra"]
 [ext_resource type="Texture2D" uid="uid://bov148wpepqnk" path="res://Asset/Sprite/Archer stop run-Sheet.png" id="4_7oore"]
 
@@ -272,6 +273,7 @@ offset_right = 49.1795
 offset_bottom = 0.382545
 scale = Vector2(0.2, 0.2)
 size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("3_jpg52")
 theme_override_font_sizes/mono_font_size = 87
 theme_override_font_sizes/normal_font_size = 45
 bbcode_enabled = true

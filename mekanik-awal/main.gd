@@ -44,15 +44,26 @@ var word_list = [
 	"ghuccah",
 	"tebengbang",
 	"mahu",
+	"makon",
+	"galo",
+	"jingok",
+	"pacak",
+	"cindo",
+	"mangcek",
+	"bicek",
+	"betumbuk",
+	"pening",
+	"gampong",
+	"beungeh"
 ]
 var projectile_words = [
-	"po",
-	"pi",
-	"pow",
-	"zap",
+	"way",
+	"dio",
+	"dak",
+	"dem",
 	"hit",
-	"wid",
-	"xo"
+	"apo",
+	"lon"
 ]
 
 var waves = [

@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://7a30u6j27vkm"]
+[gd_scene load_steps=25 format=3 uid="uid://7a30u6j27vkm"]
 
+[ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="2_epg4t"]
 [ext_resource type="Shader" uid="uid://dciokyq6dqyx8" path="res://outline.gdshader" id="2_iifgy"]
-[ext_resource type="Script" uid="uid://cug06nl33vbpx" path="res://enemy.gd" id="2_qi2p4"]
+[ext_resource type="Script" uid="uid://bf2q4civbivff" path="res://enemy.gd" id="2_qi2p4"]
 [ext_resource type="Texture2D" uid="uid://2heajim6bpt2" path="res://Asset/Sprite/Melee-Sheet.png" id="3_qi2p4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_epg4t"]
@@ -157,6 +158,7 @@ offset_right = 49.1795
 offset_bottom = 2.57383
 scale = Vector2(0.2, 0.2)
 size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("2_epg4t")
 theme_override_font_sizes/mono_font_size = 87
 theme_override_font_sizes/normal_font_size = 45
 bbcode_enabled = true

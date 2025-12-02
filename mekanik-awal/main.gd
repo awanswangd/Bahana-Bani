@@ -188,6 +188,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			var next_character = prompt.substr(current_letter_index, 1).to_lower()
 			if key_typed == next_character:
 				print("success %s" % key_typed)
+				SoundManager.play_sfx("typing")
 				current_letter_index += 1
 				active_enemy.set_next_character(current_letter_index)
 				if current_letter_index == prompt.length():

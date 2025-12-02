@@ -14,7 +14,8 @@ var sfx_to_load = {
 	"hit": "res://audio/sfx/hit.wav",
 	"lose": "res://audio/sfx/lose.wav",
 	"misstype": "res://audio/sfx/misstype.wav",
-	"projectile_correct": "res://audio/sfx/projectile_correct.wav"
+	"projectile_correct": "res://audio/sfx/projectile_correct.wav",
+	"typing": "res://audio/sfx/typing.wav"
 }
 
 

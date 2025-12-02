@@ -177,6 +177,7 @@ func find_new_active_enemy(typed_character: String):
 		var next_character = prompt.substr(0, 1).to_lower()
 		if next_character == typed_character:
 			print("Found enemy that starts with %s" % next_character)
+			SoundManager.play_sfx("typing")
 			active_enemy = enemy
 			current_letter_index = 1
 			active_enemy.set_next_character(current_letter_index)

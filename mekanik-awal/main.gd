@@ -157,6 +157,7 @@ func find_new_active_enemy(typed_character: String):
 		if next_character == typed_character:
 			if active_enemy and active_enemy.has_method("set_targeted"):
 				active_enemy.set_targeted(false)
+			SoundManager.play_sfx("typing")
 			active_enemy = enemy
 			if active_enemy.has_method("set_targeted"):
 				active_enemy.set_targeted(true)

@@ -1,9 +1,14 @@
-[gd_scene load_steps=25 format=3 uid="uid://7a30u6j27vkm"]
+[gd_scene load_steps=26 format=3 uid="uid://7a30u6j27vkm"]
 
 [ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="2_epg4t"]
 [ext_resource type="Shader" uid="uid://dciokyq6dqyx8" path="res://outline.gdshader" id="2_iifgy"]
 [ext_resource type="Script" uid="uid://bf2q4civbivff" path="res://enemy.gd" id="2_qi2p4"]
 [ext_resource type="Texture2D" uid="uid://2heajim6bpt2" path="res://Asset/Sprite/Melee-Sheet.png" id="3_qi2p4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iifgy"]
+shader = ExtResource("2_iifgy")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_thickness = 10.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_epg4t"]
 shader = ExtResource("2_iifgy")
@@ -146,6 +151,7 @@ animations = [{
 radius = 17.3183
 
 [node name="enemy" type="Node2D"]
+material = SubResource("ShaderMaterial_iifgy")
 position = Vector2(860, 317)
 scale = Vector2(3.93437, 3.65083)
 script = ExtResource("2_qi2p4")
@@ -174,12 +180,12 @@ material = SubResource("ShaderMaterial_epg4t")
 position = Vector2(0, 0.27391)
 scale = Vector2(0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_dxifv")
-animation = &"flight"
-frame_progress = 0.835916
+animation = &"death"
 flip_h = true
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 position = Vector2(-2.28753, -0.821731)
 shape = SubResource("CircleShape2D_4gyqm")

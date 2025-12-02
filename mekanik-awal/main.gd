@@ -100,6 +100,7 @@ func _ready() -> void:
 	start_wave(current_wave_index)
 	SoundManager.play_music(battle_theme)
 
+
 func player_hit() -> void:
 	if game_state != GameState.PLAYING:
 		return
@@ -571,10 +572,8 @@ func _on_wave_timer_timeout() -> void:
 		wave_timer.stop()
 		return
 
-	# turunkan countdown
 	wave_countdown -= 1
 
-	# kalau masih ada sisa detik, update label dan tunggu tick berikutnya
 	if wave_countdown > 0:
 		if wave_label:
 			wave_label.text = "Wave complete — next in %ds" % wave_countdown

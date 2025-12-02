@@ -4,7 +4,6 @@ extends Node2D
 @export var green: Color = Color("#FFFFFF")
 @export var red: Color = Color("#FFFFFF")
 @export var is_dead: bool = false
-var is_animating_death: bool = false
 @export var speed: float = 2.0
 @export var shoot_offset: Vector2 = Vector2(-40, 0)
 @export var stop_x: float = 980.0
@@ -13,19 +12,31 @@ var is_animating_death: bool = false
 @onready var shoot_timer: Timer = $ShootTimer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-# Variabel status target
 var is_targeted: bool = false
+var is_shooting: bool = false 
+var has_arrived: bool = false 
 
 func _ready() -> void:
 	add_to_group("enemy")
-	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
 	
-	# SETUP SHADER: Duplicate material agar outline unik per musuh
+	if not shoot_timer.timeout.is_connected(_on_shoot_timer_timeout):
+		shoot_timer.timeout.connect(_on_shoot_timer_timeout)
+	
 	if sprite.material:
 		sprite.material = sprite.material.duplicate()
+	
+	if sprite.sprite_frames.has_animation("shoot"):
+		sprite.sprite_frames.set_animation_loop("shoot", false)
+	
+	if sprite.sprite_frames.has_animation("idle"):
+		sprite.sprite_frames.set_animation_loop("idle", true)
+		
+	shoot_timer.wait_time = 2.0
+	shoot_timer.one_shot = false
+	shoot_timer.start()
 
 func _physics_process(delta: float) -> void:
-	if is_dead:
+	if is_dead or is_shooting:
 		return
 
 	var final_speed := speed
@@ -35,18 +46,42 @@ func _physics_process(delta: float) -> void:
 
 	if global_position.x > stop_x:
 		global_position.x -= final_speed
+		has_arrived = false
+		if sprite.animation != "flight":
+			sprite.play("flight")
 	else:
 		global_position.x = stop_x
+		has_arrived = true
+		
+		if sprite.animation != "idle":
+			sprite.play("idle")
 
-	if not sprite.is_playing():
-		sprite.play("flight")
+func _on_shoot_timer_timeout() -> void:
+	if is_dead or is_shooting or not has_arrived:
+		return
+	
+	tembak_panah()
 
-# --- FUNGSI OUTLINE ---
+func tembak_panah() -> void:
+	is_shooting = true 
+	
+	sprite.play("shoot")
+	await sprite.animation_finished
+	
+	if not is_dead:
+		var main = get_tree().get_first_node_in_group("main")
+		if main and main.has_method("spawn_projectile_at"):
+			main.spawn_projectile_at(global_position + shoot_offset)
+		
+		sprite.play("idle")
+	
+	is_shooting = false 
+
 func set_targeted(value: bool) -> void:
 	is_targeted = value
 	if sprite.material:
 		if value:
-			sprite.material.set_shader_parameter("line_thickness", 1.5)
+			sprite.material.set_shader_parameter("line_thickness", 10.0)
 		else:
 			sprite.material.set_shader_parameter("line_thickness", 0.0)
 
@@ -76,18 +111,9 @@ func get_bbcode_color_tag(color: Color) -> String:
 func get_bbcode_end_color_tag() -> String:
 	return "[/color]"
 
-func _on_shoot_timer_timeout() -> void:
-	if is_dead:
-		return
-	var main = get_tree().get_first_node_in_group("main")
-	if main == null:
-		return
-	# Pastikan main punya fungsi spawn_projectile_at
-	if main.has_method("spawn_projectile_at"):
-		main.spawn_projectile_at(global_position + shoot_offset)
-
 func die():
 	is_dead = true
+	shoot_timer.stop()
 	$AnimatedSprite2D.play("death")
 	await $AnimatedSprite2D.animation_finished
 	var main = get_tree().get_first_node_in_group("main")

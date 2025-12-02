@@ -34,7 +34,7 @@ func set_targeted(value: bool) -> void:
 	if sprite.material:
 		if value:
 			# Outiline nyala
-			sprite.material.set_shader_parameter("line_thickness", 1.5)
+			sprite.material.set_shader_parameter("line_thickness", 10)
 		else:
 			# Outline Mati
 			sprite.material.set_shader_parameter("line_thickness", 0.0)

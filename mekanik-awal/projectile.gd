@@ -8,8 +8,16 @@ extends Node2D
 
 @onready var prompt: RichTextLabel = $RichTextLabel
 
+@onready var sprite = $Sprite2D 
+
+var is_targeted: bool = false
+
 func _ready() -> void:
 	add_to_group("projectile")
+	
+	# SETUP SHADER: Duplicate material agar outline unik
+	if sprite.material:
+		sprite.material = sprite.material.duplicate()
 
 func _physics_process(delta: float) -> void:
 	# gerak ke kiri
@@ -18,6 +26,17 @@ func _physics_process(delta: float) -> void:
 	# optional: kalau sudah jauh banget, auto hilang
 	if global_position.x < -2000:
 		queue_free()
+
+# --- FUNGSI OUTLINE (Ini yang sebelumnya hilang) ---
+func set_targeted(value: bool) -> void:
+	is_targeted = value
+	if sprite.material:
+		if value:
+			# Outline nyala (tebal 10.0 atau sesuai selera)
+			sprite.material.set_shader_parameter("line_thickness", 10.0)
+		else:
+			# Outline mati
+			sprite.material.set_shader_parameter("line_thickness", 0.0)
 
 func get_prompt() -> String:
 	return prompt.text

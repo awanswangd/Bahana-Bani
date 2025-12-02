@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://ckxc6a4jr0xeo"]
+[gd_scene load_steps=42 format=3 uid="uid://ckxc6a4jr0xeo"]
 
 [ext_resource type="Shader" uid="uid://dciokyq6dqyx8" path="res://outline.gdshader" id="1_7oore"]
 [ext_resource type="Script" uid="uid://dfy4upaxjy6y8" path="res://enemy_archer.gd" id="1_ehv12"]
@@ -83,6 +83,10 @@ region = Rect2(1600, 0, 320, 320)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pwmsw"]
 atlas = ExtResource("3_x37ra")
 region = Rect2(0, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbc4k"]
+atlas = ExtResource("3_x37ra")
+region = Rect2(320, 960, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gdtc5"]
 atlas = ExtResource("3_x37ra")
@@ -205,6 +209,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_tbc4k")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_gdtc5")
 }, {
 "duration": 1.0,
@@ -290,17 +302,18 @@ material = SubResource("ShaderMaterial_7oore")
 position = Vector2(0, -3.27826e-07)
 scale = Vector2(0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_dxifv")
-animation = &"death"
-frame = 9
-frame_progress = 1.0
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.819545
 flip_h = true
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-3.81255, 3.56083)
+position = Vector2(1.27086, 3.56083)
 shape = SubResource("CircleShape2D_4gyqm")
 
 [node name="ShootTimer" type="Timer" parent="."]
 wait_time = 2.0
-autostart = true
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

@@ -211,9 +211,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-0.508341, -4.10865)
 scale = Vector2(0.145, 0.145)
 sprite_frames = SubResource("SpriteFrames_dxifv")
-animation = &"death"
-frame = 9
-frame_progress = 1.0
+animation = &"idle"
 flip_h = true
 
 [node name="Area2D" type="Area2D" parent="."]

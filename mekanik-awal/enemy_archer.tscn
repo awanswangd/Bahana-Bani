@@ -1,8 +1,19 @@
-[gd_scene load_steps=18 format=3 uid="uid://ckxc6a4jr0xeo"]
+[gd_scene load_steps=21 format=3 uid="uid://ckxc6a4jr0xeo"]
 
+[ext_resource type="Shader" uid="uid://dciokyq6dqyx8" path="res://outline.gdshader" id="1_7oore"]
 [ext_resource type="Script" uid="uid://dfy4upaxjy6y8" path="res://enemy_archer.gd" id="1_ehv12"]
 [ext_resource type="Texture2D" uid="uid://ojerk4o4x8l4" path="res://Death.png" id="2_7oore"]
 [ext_resource type="Texture2D" uid="uid://mb1vjgg1hhj7" path="res://Flight.png" id="2_x37ra"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jpg52"]
+shader = ExtResource("1_7oore")
+shader_parameter/line_color = Color(1, 1, 0, 1)
+shader_parameter/line_thickness = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7oore"]
+shader = ExtResource("1_7oore")
+shader_parameter/line_color = Color(9.289, 0, 0, 1)
+shader_parameter/line_thickness = 3.25988e-09
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jpg52"]
 atlas = ExtResource("2_7oore")
@@ -105,6 +116,8 @@ animations = [{
 radius = 17.3183
 
 [node name="EnemyArcher" type="Node2D"]
+material = SubResource("ShaderMaterial_jpg52")
+position = Vector2(847, 321)
 scale = Vector2(3.93437, 3.65083)
 script = ExtResource("1_ehv12")
 
@@ -128,9 +141,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.792663, 0.366325, 0.35442, 1)
+material = SubResource("ShaderMaterial_7oore")
 position = Vector2(0, 0.27391)
 sprite_frames = SubResource("SpriteFrames_dxifv")
-animation = &"death"
+animation = &"flight"
+frame = 5
+frame_progress = 0.425948
 flip_h = true
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -140,5 +156,5 @@ position = Vector2(-2.28753, -0.821731)
 shape = SubResource("CircleShape2D_4gyqm")
 
 [node name="ShootTimer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 2.0
 autostart = true

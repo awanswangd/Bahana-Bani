@@ -7,7 +7,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_epg4t"]
 shader = ExtResource("2_iifgy")
-shader_parameter/line_color = Color(1, 1, 0, 1)
+shader_parameter/line_color = Color(0.82, 0, 0, 1)
 shader_parameter/line_thickness = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pwjut"]

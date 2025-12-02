@@ -11,15 +11,22 @@ var is_animating_death: bool = false
 
 @onready var prompt: RichTextLabel = $RichTextLabel
 @onready var shoot_timer: Timer = $ShootTimer
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D   
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+# Variabel status target
+var is_targeted: bool = false
 
 func _ready() -> void:
 	add_to_group("enemy")
 	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
+	
+	# SETUP SHADER: Duplicate material agar outline unik per musuh
+	if sprite.material:
+		sprite.material = sprite.material.duplicate()
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
-		return  
+		return
 
 	var final_speed := speed
 	var main = get_tree().get_first_node_in_group("main")
@@ -34,6 +41,14 @@ func _physics_process(delta: float) -> void:
 	if not sprite.is_playing():
 		sprite.play("flight")
 
+# --- FUNGSI OUTLINE ---
+func set_targeted(value: bool) -> void:
+	is_targeted = value
+	if sprite.material:
+		if value:
+			sprite.material.set_shader_parameter("line_thickness", 1.5)
+		else:
+			sprite.material.set_shader_parameter("line_thickness", 0.0)
 
 func get_prompt() -> String:
 	return prompt.text
@@ -43,7 +58,6 @@ func set_prompt(text: String) -> void:
 
 func set_next_character(next_character_index: int) -> void:
 	var text := prompt.text
-
 	var blue_text = get_bbcode_color_tag(blue) + text.substr(0, next_character_index) + get_bbcode_end_color_tag()
 	var green_text = ""
 	var red_text = ""
@@ -56,7 +70,6 @@ func set_next_character(next_character_index: int) -> void:
 
 	prompt.parse_bbcode(blue_text + green_text + red_text)
 
-
 func get_bbcode_color_tag(color: Color) -> String:
 	return "[color=#" + color.to_html(false) + "]"
 
@@ -65,12 +78,13 @@ func get_bbcode_end_color_tag() -> String:
 
 func _on_shoot_timer_timeout() -> void:
 	if is_dead:
-		return  # kalau mati jangan nembak
+		return
 	var main = get_tree().get_first_node_in_group("main")
 	if main == null:
 		return
-
-	main.spawn_projectile_at(global_position + shoot_offset)
+	# Pastikan main punya fungsi spawn_projectile_at
+	if main.has_method("spawn_projectile_at"):
+		main.spawn_projectile_at(global_position + shoot_offset)
 
 func die():
 	is_dead = true

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://catiai6vpep2k"
-path="res://.godot/imported/Sipahit-Sheet.png-d371dbe3186ef63cb73cea55eb8f49d8.ctex"
+uid="uid://2heajim6bpt2"
+path="res://.godot/imported/Melee-Sheet.png-92948f2cb9260a15b7acbec1d6383e44.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/Sprite/Sipahit-Sheet.png"
-dest_files=["res://.godot/imported/Sipahit-Sheet.png-d371dbe3186ef63cb73cea55eb8f49d8.ctex"]
+source_file="res://Asset/Sprite/Melee-Sheet.png"
+dest_files=["res://.godot/imported/Melee-Sheet.png-92948f2cb9260a15b7acbec1d6383e44.ctex"]
 
 [params]
 

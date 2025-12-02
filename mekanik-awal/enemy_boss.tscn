@@ -152,7 +152,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"flight",
-"speed": 15.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -177,7 +177,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 2.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4gyqm"]
@@ -209,7 +209,9 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-0.508341, -4.10865)
 scale = Vector2(0.145, 0.145)
 sprite_frames = SubResource("SpriteFrames_dxifv")
-animation = &"idle"
+animation = &"death"
+frame = 9
+frame_progress = 1.0
 flip_h = true
 
 [node name="Area2D" type="Area2D" parent="."]

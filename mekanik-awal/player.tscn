@@ -131,7 +131,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -191,7 +191,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 15.0
+"speed": 3.0
 }]
 
 [node name="Player" type="Node2D"]
@@ -201,5 +201,6 @@ script = ExtResource("1_onrkg")
 position = Vector2(0, 0.27391)
 scale = Vector2(0.145, 0.145)
 sprite_frames = SubResource("SpriteFrames_hqtel")
-animation = &"death"
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.65011

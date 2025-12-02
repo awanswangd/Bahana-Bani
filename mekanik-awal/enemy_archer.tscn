@@ -200,7 +200,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"flight",
-"speed": 15.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -252,7 +252,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"stop",
-"speed": 5.0
+"speed": 7.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4gyqm"]
@@ -288,7 +288,9 @@ material = SubResource("ShaderMaterial_7oore")
 position = Vector2(0, -3.27826e-07)
 scale = Vector2(0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_dxifv")
-animation = &"shoot"
+animation = &"death"
+frame = 9
+frame_progress = 1.0
 flip_h = true
 
 [node name="Area2D" type="Area2D" parent="."]

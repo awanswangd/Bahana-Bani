@@ -7,10 +7,13 @@ extends Node2D
 @onready var prompt = $RichTextLabel
 @onready var sprite = $AnimatedSprite2D
 @export var is_dead: bool = false
+var is_targeted: bool = false
 var is_animating_death: bool = false
 
 func _ready() -> void:
 	add_to_group("enemy")
+	if sprite.material:
+		sprite.material = sprite.material.duplicate()
 
 func _physics_process(delta):
 	if is_dead:
@@ -25,6 +28,16 @@ func _physics_process(delta):
 	global_position.x -= final_speed
 	if not sprite.is_playing():
 		sprite.play("flight")
+
+func set_targeted(value: bool) -> void:
+	is_targeted = value
+	if sprite.material:
+		if value:
+			# Outiline nyala
+			sprite.material.set_shader_parameter("line_thickness", 1.5)
+		else:
+			# Outline Mati
+			sprite.material.set_shader_parameter("line_thickness", 0.0)
 
 func get_prompt() -> String:
 	return prompt.text

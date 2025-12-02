@@ -118,34 +118,37 @@ func add_score(amount: int):
 func update_hp_display() -> void:
 	hp_label.text = "HP: %d" % hp
 
+
+
 func find_new_active_enemy(typed_character: String):
 	print("Searching for enemy starting with: '%s'" % typed_character)
+	
+	# Loop Projectile
 	for projectile in projectile_container.get_children():
 		var prompt = projectile.get_prompt()
-		print("Checking projectile with prompt: '%s'" % prompt)
-		if prompt.is_empty():
-			continue
-
+		# ... (kode pengecekan prompt sama seperti sebelumnya) ...
 		var next_character = prompt.substr(0, 1).to_lower()
 		if next_character == typed_character:
-			print("Found projectile that starts with %s" % next_character)
+			if active_enemy and active_enemy.has_method("set_targeted"):
+				active_enemy.set_targeted(false)
 			active_enemy = projectile
+			if active_enemy.has_method("set_targeted"):
+				active_enemy.set_targeted(true)
 			current_letter_index = 1
 			active_enemy.set_next_character(current_letter_index)
 			return
-	
+	# Loop Enemy
 	for enemy in enemy_container.get_children():
 		if "is_dead" in enemy and enemy.is_dead:
 			continue
 		var prompt = enemy.get_prompt()
-		print("Checking enemy with prompt: '%s'" % prompt)
-		if prompt.is_empty():
-			continue
-
 		var next_character = prompt.substr(0, 1).to_lower()
 		if next_character == typed_character:
-			print("Found enemy that starts with %s" % next_character)
+			if active_enemy and active_enemy.has_method("set_targeted"):
+				active_enemy.set_targeted(false)
 			active_enemy = enemy
+			if active_enemy.has_method("set_targeted"):
+				active_enemy.set_targeted(true)
 			current_letter_index = 1
 			active_enemy.set_next_character(current_letter_index)
 			return
@@ -583,6 +586,8 @@ func _on_wave_timer_timeout() -> void:
 		show_win()
 
 func reset_active_enemy():
+	if active_enemy and is_instance_valid(active_enemy) and active_enemy.has_method("set_targeted"):
+		active_enemy.set_targeted(false)
 	active_enemy = null
 	current_letter_index = -1
 

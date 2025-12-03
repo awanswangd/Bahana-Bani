@@ -18,9 +18,12 @@ var credits_data = [
 	{ "role": " ", "name": "TO BE CONTINUE" }
 ]
 
+var credits_theme = load("res://audio/bgm/credits_theme.ogg")
+
 func _ready():
 	content_box.modulate.a = 0.0
 	play_credits_sequence()
+	SoundManager.play_music(credits_theme)
 
 func play_credits_sequence():
 	for data in credits_data:
@@ -42,3 +45,4 @@ func _input(event):
 
 func finish_credits():
 	Transition.change_scene_to_file(next_scene)
+	SoundManager.stop_music()

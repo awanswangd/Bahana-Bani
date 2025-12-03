@@ -16,7 +16,7 @@ var pages = [
 		"image": preload("res://enemybiasa.png")
 	},
 	{
-		"text": "*Targeting System*\nMusuh yang diketik akan punya Outline Kuning.",
+		"text": "*Targeting System*\nMusuh yang diketik akan punya Outline Merah.",
 		"image": preload("res://outline.png")
 	},
 	{

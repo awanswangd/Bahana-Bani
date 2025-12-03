@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://qpg0kbd4jscp"]
+
+[ext_resource type="Script" uid="uid://ds00us2ll247e" path="res://onboarding.gd" id="1_hbngn"]
+[ext_resource type="Texture2D" uid="uid://b328rhhvqdxba" path="res://YPSLogo.png" id="2_80sf7"]
+
+[node name="Onboarding" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hbngn")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_80sf7")
+expand_mode = 1
+stretch_mode = 5

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="mekanik awal"
-run/main_scene="uid://dqg8qdgeoo4s7"
+run/main_scene="uid://qpg0kbd4jscp"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,6 +22,7 @@ buses/default_bus_layout="uid://81xhtk7kwcy1"
 [autoload]
 
 SoundManager="*res://sound_manager.tscn"
+GameData="*res://game_data.gd"
 Transition="*res://Transition/transition.tscn"
 
 [display]

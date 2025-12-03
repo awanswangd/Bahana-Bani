@@ -129,7 +129,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nvl01")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -203,5 +203,3 @@ scale = Vector2(0.145, 0.145)
 sprite_frames = SubResource("SpriteFrames_hqtel")
 animation = &"hurt"
 autoplay = "idle"
-frame = 2
-frame_progress = 1.0

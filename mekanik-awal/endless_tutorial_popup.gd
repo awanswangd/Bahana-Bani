@@ -1,6 +1,6 @@
 extends Panel
 
-signal tutorial_finished 
+signal tutorial_finished
 
 @onready var tut_img = $Container/TutorialImage
 @onready var tut_msg = $Container/Message
@@ -12,11 +12,15 @@ var current_index: int = 0
 
 var pages = [
 	{
-		"text": "Ketik kata di atas kepala musuh.",
+		"text": "Di Endless Mode, Speed Musuh Selalu Meningkat\nSetiap Kali Musuh Dibunuh.",
+		"image": preload("res://EnemySpeed.png")
+	},
+	{
+		"text": "Ketik kata di atas kepala musuh!",
 		"image": preload("res://enemybiasa.png")
 	},
 	{
-		"text": "*Targeting System*\nMusuh yang diketik akan punya Outline Kuning.",
+		"text": "*Targeting System*\nMusuh yang diketik akan punya Outline Merah!",
 		"image": preload("res://outline.png")
 	},
 	{
@@ -52,7 +56,6 @@ func update_ui():
 		prev_btn.disabled = false
 
 func _on_next_bttn_pressed():
-	# Kalau belum halaman terakhir -> Lanjut
 	if current_index < pages.size() - 1:
 		current_index += 1
 		update_ui()
@@ -60,13 +63,11 @@ func _on_next_bttn_pressed():
 		tutup_tutorial()
 
 func _on_prev_bttn_pressed():
-	# Mundur halaman
 	if current_index > 0:
 		current_index -= 1
 		update_ui()
 
 func _on_close_bttn_pressed():
-	# Langsung tutup paksa
 	tutup_tutorial()
 
 func tutup_tutorial():

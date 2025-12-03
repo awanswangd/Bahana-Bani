@@ -36,8 +36,7 @@ func _input(event: InputEvent) -> void:
 		_next_page()
 	elif event is InputEventKey and event.pressed:
 		if event.keycode == KEY_SPACE or event.keycode == KEY_ENTER:
-			next_pressed.play()
-			_next_page()
+			Transition.change_scene_to_file(next_scene_path)
 
 
 func _show_current_page() -> void:

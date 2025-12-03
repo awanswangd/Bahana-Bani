@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-@export var max_hp: int = 5
+@export var max_hp: int = 1
 var hp: int
 var is_dead: bool = false
 var is_attacking: bool = false 
@@ -20,8 +20,10 @@ func play_idle() -> void:
 func play_attack() -> void:
 	if is_dead: return
 	is_attacking = true
-	if sprite.animation != "attack" and sprite.animation != "hurt":
-		sprite.play("attack")
+	if sprite.animation == "hurt":
+		return
+	sprite.stop() 
+	sprite.play("attack")
 
 func take_damage(amount: int):
 	if is_dead: return

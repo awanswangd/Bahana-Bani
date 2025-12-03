@@ -187,6 +187,10 @@ one_shot = true
 
 [node name="Notification" parent="." instance=ExtResource("7_272bh")]
 visible = false
+offset_left = 224.0
+offset_top = 96.0
+offset_right = 912.0
+offset_bottom = 552.0
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="area_entered" from="PlayerLine" to="." method="_on_player_line_area_entered"]

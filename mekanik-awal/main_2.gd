@@ -138,6 +138,8 @@ func find_new_active_enemy(typed_character: String):
 			if active_enemy and active_enemy.has_method("set_targeted"):
 				active_enemy.set_targeted(false)
 			SoundManager.play_sfx("typing")
+			if player.has_method("play_attack"):
+					player.play_attack()
 			active_enemy = enemy
 			if active_enemy.has_method("set_targeted"):
 				active_enemy.set_targeted(true) 
@@ -172,6 +174,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			if key_typed == next_character:
 				print("success %s" % key_typed)
 				SoundManager.play_sfx("typing")
+				if player.has_method("play_attack"):
+					player.play_attack()
 				current_letter_index += 1
 				active_enemy.set_next_character(current_letter_index)
 				if current_letter_index == prompt.length():
@@ -398,8 +402,7 @@ func show_win() -> void:
 		enemy.queue_free()
 	for proj in projectile_container.get_children():
 		proj.queue_free()
-
-	Transition.change_scene_to_file("res://MainMenu/main_menu.tscn")
+	Transition.change_scene_to_file("res://credits.tscn")
 
 func _update_wave_label() -> void:
 	if wave_label == null:

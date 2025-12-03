@@ -1,7 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://b08egjne5f46g"]
+[gd_scene load_steps=9 format=3 uid="uid://b08egjne5f46g"]
 
 [ext_resource type="Script" uid="uid://dwt8dashhj2aw" path="res://cutscene_comic.gd" id="1_cfbsd"]
+[ext_resource type="Texture2D" uid="uid://b0eest3kie012" path="res://Asset/Comic/1 (1).jpg" id="2_4bc8x"]
 [ext_resource type="AudioStream" uid="uid://cji6jigveh2aj" path="res://MainMenu/button-202966.mp3" id="2_addwj"]
+[ext_resource type="Texture2D" uid="uid://4m2atkis28o6" path="res://Asset/Comic/1 (2).jpg" id="3_j4mxf"]
+[ext_resource type="Texture2D" uid="uid://bhrdwa6gpdbqo" path="res://Asset/Comic/1(3).jpg" id="4_jop8t"]
+[ext_resource type="Texture2D" uid="uid://3yk5hmrjlf12" path="res://Asset/Comic/1(4).jpg" id="5_3gung"]
+[ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="6_j4mxf"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_cfbsd"]
 
@@ -13,9 +18,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cfbsd")
+pages = Array[Texture2D]([ExtResource("2_4bc8x"), ExtResource("3_j4mxf"), ExtResource("4_jop8t"), ExtResource("5_3gung")])
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="Page" type="TextureRect" parent="."]
-modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,16 +38,42 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("CanvasTexture_cfbsd")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="ClickHint" type="Label" parent="."]
+self_modulate = Color(85.245, 1, 1, 1)
+top_level = true
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 96.0
+offset_left = 10.0
+offset_top = -338.0
+offset_right = 278.0
+offset_bottom = -311.0
 grow_vertical = 0
-text = "Click to next"
+theme_override_colors/font_color = Color(0.601299, 0.0225166, 0.0124865, 1)
+theme_override_fonts/font = ExtResource("6_j4mxf")
+theme_override_font_sizes/font_size = 22
+text = "Click Untuk Melanjutkan"
+
+[node name="Skip" type="Label" parent="."]
+self_modulate = Color(85.245, 1, 1, 1)
+top_level = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 930.0
+offset_top = -339.0
+offset_right = 1198.0
+offset_bottom = -312.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.601299, 0.0225166, 0.0124865, 1)
+theme_override_fonts/font = ExtResource("6_j4mxf")
+theme_override_font_sizes/font_size = 22
+text = "Skip Tekan Spasi"
 
 [node name="PlaceholderLabel" type="Label" parent="."]
 layout_mode = 1

@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://cbohj6gog6nmy" path="res://gloriahallelujah.ttf" id="4_l4kvc"]
 [ext_resource type="PackedScene" uid="uid://dvaqavvas4jw0" path="res://Pause_Menu.tscn" id="5_dcpx8"]
 [ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="5_udm53"]
+[ext_resource type="PackedScene" uid="uid://djdq4iab0jm17" path="res://endless_tutorial_popup.tscn" id="7_l4kvc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l4kvc"]
 font = ExtResource("5_udm53")
@@ -17,10 +18,6 @@ font_size = 25
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
 bg_color = Color(0.0728426, 0.0728426, 0.0728426, 0.443137)
-
-[sub_resource type="LabelSettings" id="LabelSettings_hxunp"]
-font = ExtResource("5_udm53")
-font_size = 60
 
 [sub_resource type="LabelSettings" id="LabelSettings_neb3w"]
 font = ExtResource("5_udm53")
@@ -67,7 +64,25 @@ position = Vector2(1166, 318)
 position = Vector2(1162, 441)
 
 [node name="Marker2D5" type="Marker2D" parent="SpawnContainer"]
-position = Vector2(1160, 591)
+position = Vector2(1168, 607)
+
+[node name="Marker2D6" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1168, 535)
+
+[node name="Marker2D7" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1168, 487)
+
+[node name="Marker2D8" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1170, 393)
+
+[node name="Marker2D9" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1170, 353)
+
+[node name="Marker2D10" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1170, 273)
+
+[node name="Marker2D11" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1170, 225)
 
 [node name="enemycontainer" type="Node2D" parent="."]
 position = Vector2(-8, 4)
@@ -114,20 +129,19 @@ text = "HP :"
 label_settings = SubResource("LabelSettings_8g01r")
 metadata/_edit_use_anchors_ = true
 
-[node name="GameOverLabel" type="Label" parent="CanvasLayer"]
+[node name="GameOverLabel" type="RichTextLabel" parent="CanvasLayer"]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_l4kvc")
-theme_override_font_sizes/font_size = 50
+theme_override_fonts/normal_font = ExtResource("5_udm53")
+theme_override_font_sizes/normal_font_size = 45
 theme_override_styles/normal = SubResource("StyleBoxFlat_1bvp3")
+bbcode_enabled = true
 text = "Game Over"
-label_settings = SubResource("LabelSettings_hxunp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -176,6 +190,13 @@ one_shot = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("5_dcpx8")]
 visible = false
+
+[node name="EndlessTutorialPopup" parent="." instance=ExtResource("7_l4kvc")]
+visible = false
+offset_left = 222.0
+offset_top = 100.0
+offset_right = 910.0
+offset_bottom = 556.0
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="area_entered" from="PlayerLine" to="." method="_on_player_line_area_entered"]

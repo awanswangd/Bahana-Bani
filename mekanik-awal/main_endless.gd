@@ -25,11 +25,10 @@ var restart_index: int = 0
 @onready var intro_timer: Timer = $IntroTimer
 @onready var wave_intro_label: Label = $CanvasLayer/WaveIntroLabel
 @onready var pause_menu = $PauseMenu
-
+@onready var tutorial_popup = $EndlessTutorialPopup
 
 var active_enemy = null
 var current_letter_index: int = -1
-
 var word_list = [
 	"temambugh",
 	"kaghai",
@@ -52,18 +51,19 @@ var projectile_words = [
 	"xo"
 ]
 
-var base_minions_per_wave := 5          # jumlah musuh di awal wave 1
-var minions_increment_per_wave := 1     # tiap wave nambah berapa musuh
-var max_minions_per_wave := 25          # batas maksimal musuh per wave
-var boss_wave_interval := 5             # tiap berapa wave muncul boss (0 = tidak pernah)
-var enemy_speed_multiplier: float = 1.0   # multiplier awal (1x speed normal)
-var enemy_speed_increment: float = 0.1   # nambah tiap 1 musuh mati (5%)
-var total_kills: int = 0                  # cuma buat debug / info
+var base_minions_per_wave := 5          #jumlah musuh di awal wave 1
+var minions_increment_per_wave := 1     #tiap wave nambah berapa musuh
+var max_minions_per_wave := 25          #batas maksimal musuh per wave
+var boss_wave_interval := 5             #tiap berapa wave muncul boss (0 = tidak pernah)
+var enemy_speed_multiplier: float = 1.0   #multiplier awal (1x speed normal)
+var enemy_speed_increment: float = 0.1   #nambah tiap 1 musuh mati (5%)
+var total_kills: int = 0                  #cuma buat debug / info
 
 func register_enemy_kill() -> void:
 	total_kills += 1
 	enemy_speed_multiplier += enemy_speed_increment
 	print("Kill %d -> enemy_speed_multiplier = %.2f" % [total_kills, enemy_speed_multiplier])
+	update_score_display()
 
 func get_enemy_speed_multiplier() -> float:
 	return enemy_speed_multiplier
@@ -99,6 +99,7 @@ func _ready() -> void:
 	add_to_group("main")
 	randomize()
 	update_hp_display()
+	update_score_display()
 	score_label.text = "SCORE: %d" % score
 
 	if not wave_timer.timeout.is_connected(_on_wave_timer_timeout):
@@ -111,28 +112,64 @@ func _ready() -> void:
 		intro_timer.timeout.connect(_on_intro_timer_timeout)
 	else:
 		pass
-
+	get_tree().paused = true
 	if wave_intro_label:
 		wave_intro_label.hide()
-	spawn_boss()
+	if tutorial_popup:
+		tutorial_popup.show()
+		if not tutorial_popup.tutorial_finished.is_connected(_on_tutorial_finished):
+			tutorial_popup.tutorial_finished.connect(_on_tutorial_finished)
+	else:
+		_on_tutorial_finished()
+
+func _on_tutorial_finished():
+	print("Tutorial Endless Selesai -> Game Dimulai")
+	get_tree().paused = false
 	start_wave(current_wave_index)
 	SoundManager.play_music(battle_theme)
-
+	
 func game_over() -> void:
 	game_state = GameState.GAME_OVER
 	print("GAME OVER")
+	wave_label.hide()
+	score_label.hide()
+
 	SoundManager.stop_music()
 	SoundManager.play_sfx("lose")
+	
 	spawn_timer.stop()
+	
 	for enemy in enemy_container.get_children():
 		enemy.queue_free()
+	for proj in projectile_container.get_children():
+		proj.queue_free()
+	
+	var is_new_record = GameData.check_and_update_highscore(score)
+	var best_score = GameData.high_score
+	
 	var go_label = $CanvasLayer/GameOverLabel
-	go_label.text = "GAME OVER\nKetik \"hidup\" untuk bermain lagi"
+	
+	var final_text = "GAME OVER\n\n"
+	final_text += "Score: %d\n" % score
+	
+	if is_new_record:
+		final_text += "[color=yellow]NEW HIGH SCORE: %d !![/color]\n" % best_score
+	else:
+		final_text += "High Score: %d\n" % best_score
+		
+	final_text += "\nKetik \"hidup\" untuk bermain lagi"
+	
+	go_label.text = final_text
 	go_label.show()
 
 func add_score(amount: int):
 	score += amount
-	score_label.text = "SCORE: %d" % score
+	update_score_display() 
+
+func update_score_display() -> void:
+	if score_label:
+		var speed_percent = int(enemy_speed_multiplier * 100)
+		score_label.text = "SCORE: %d | Speed Musuh: %d%%" % [score, speed_percent]
 
 func update_hp_display() -> void:
 	if player:
@@ -198,6 +235,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			if key_typed == next_character:
 				print("success %s" % key_typed)
 				SoundManager.play_sfx("typing")
+				if player.has_method("play_attack"):
+					player.play_attack()
 				current_letter_index += 1
 				active_enemy.set_next_character(current_letter_index)
 				if current_letter_index == prompt.length():

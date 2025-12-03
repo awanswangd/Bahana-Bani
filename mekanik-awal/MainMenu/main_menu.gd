@@ -36,3 +36,7 @@ func _on_exit_bttn_pressed() -> void:
 func _on_close_bttn_pressed() -> void:
 	button_pressed.play()
 	_ready()
+
+func _on_credits_pressed() -> void:
+	button_pressed.play()
+	Transition.change_scene_to_file("res://credits.tscn")

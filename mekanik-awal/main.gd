@@ -172,7 +172,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			if game_state != GameState.GAME_OVER:
 				_toggle_pause()
 			return
-	
 	if event is InputEventKey and not event.is_pressed():
 		var key_typed = event.as_text().to_lower()
 		if key_typed == "":
@@ -191,6 +190,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			if key_typed == next_character:
 				print("success %s" % key_typed)
 				SoundManager.play_sfx("typing")
+				if player.has_method("play_attack"):
+					player.play_attack()
 				current_letter_index += 1
 				active_enemy.set_next_character(current_letter_index)
 				if current_letter_index == prompt.length():
@@ -202,7 +203,6 @@ func _unhandled_input(event: InputEvent) -> void:
 					add_score(100)
 					current_letter_index = -1
 					if active_enemy != null and active_enemy.is_in_group("boss") and active_enemy.has_method("on_word_completed"):
-						# BOSS: pakai sistem multi-phase
 						active_enemy.on_word_completed()
 					else:
 						# musuh biasa / projectile
@@ -406,7 +406,7 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 		return
 
 func show_win() -> void:
-	# Story 1: semua wave sudah clear, lanjut ke Story 2 (cutscene)
+	# Story 1: semua wave sudah clear, lanjut ke Story 2
 	print("STORY 1 CLEAR — go to Story 2 cutscene")
 	SoundManager.stop_music()
 	SoundManager.play_sfx("win")
@@ -421,8 +421,7 @@ func show_win() -> void:
 	for proj in projectile_container.get_children():
 		proj.queue_free()
 
-	# langsung ganti scene ke cutscene Story 2
-	Transition.change_scene_to_file("res://cutscene_story_2.tscn")
+	Transition.change_scene_to_file("res://main2.tscn")
 
 func _update_wave_label() -> void:
 	if wave_label == null:

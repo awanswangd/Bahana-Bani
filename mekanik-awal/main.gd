@@ -31,27 +31,17 @@ var active_enemy = null
 var current_letter_index: int = -1
 
 var word_list = [
-	"temambugh",
-	"kaghai",
-	"kumbang",
-	"pedom",
-	"lapah",
-	"ghatong",
-	"lengong",
-	"ghuccah",
-	"tebengbang",
-	"mahu",
-	"makon",
-	"galo",
-	"jingok",
-	"pacak",
-	"cindo",
-	"mangcek",
-	"bicek",
-	"betumbuk",
-	"pening",
-	"gampong",
-	"beungeh"
+	"temambugh","berondok","paten","bedangkik","dapoek",
+	"kaghai","langgar","aluang","andung","lebung",
+	"kumbang","balubua","jombang","lengong","tekuyung",
+	"pedom","Mandeh","nyanyang","santing","tingkap",
+	"lapah","sejemang","sipangkalan","dulang","ngadat",
+	"ghatong","baladas","pongkang","belange","jemuah",
+	"lengong","pening","gampong","nganyak","ngeladang",
+	"ghuccah","mangcek","betumbuk","bicek","busung",
+	"tebengbang","galo","mahu","makon","ngaro",
+	"jingok","pacak","cindo","beungeh","sonang",
+	"lapau","bahempang","pinggan","Kaspin","cawan","nyabit",
 ]
 var projectile_words = [
 	"way",

@@ -9,7 +9,7 @@ var battle_theme = load("res://audio/bgm/battle_theme.ogg")
 var score: int = 0
 enum GameState { PLAYING, GAME_OVER }
 var game_state: GameState = GameState.PLAYING
-var restart_phrase := "hidup lagi"
+var restart_phrase := "hidup"
 var restart_index: int = 0
 
 @onready var player = $Player
@@ -25,7 +25,7 @@ var restart_index: int = 0
 @onready var intro_timer: Timer = $IntroTimer
 @onready var wave_intro_label: Label = $CanvasLayer/WaveIntroLabel
 @onready var pause_menu = $PauseMenu
-
+@onready var tutorial_popup = $Notification
 
 var active_enemy = null
 var current_letter_index: int = -1
@@ -81,6 +81,7 @@ var wave_countdown: int = 0
 func _ready() -> void:
 	add_to_group("main")
 	randomize()
+	
 	update_hp_display()
 	score_label.text = "SCORE: %d" % score
 
@@ -90,12 +91,23 @@ func _ready() -> void:
 		spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 	if intro_timer:
 		intro_timer.timeout.connect(_on_intro_timer_timeout)
-	else:
-		pass
+	SoundManager.play_music(battle_theme)
 	if wave_intro_label:
 		wave_intro_label.hide()
+	
+	get_tree().paused = true
+	
+	if tutorial_popup:
+		tutorial_popup.show()
+		if not tutorial_popup.tutorial_finished.is_connected(_on_tutorial_finished):
+			tutorial_popup.tutorial_finished.connect(_on_tutorial_finished)
+	else:
+		_on_tutorial_finished()
+
+func _on_tutorial_finished():
+	print("Tutorial Selesai -> Game Dimulai!")
+	get_tree().paused = false 
 	start_wave(current_wave_index)
-	SoundManager.play_music(battle_theme)
 
 func game_over() -> void:
 	game_state = GameState.GAME_OVER
@@ -420,7 +432,6 @@ func _update_wave_label() -> void:
 	var proj_alive := 0
 	var debug_lines: Array[String] = []
 
-	# HITUNG ENEMY ALIVE: belum queued_free DAN belum is_dead
 	for c in enemy_container.get_children():
 		var queued := c.is_queued_for_deletion()
 		var dead := false
@@ -433,7 +444,6 @@ func _update_wave_label() -> void:
 		debug_lines.append("ENEMY %s (%s) queued=%s is_dead=%s" %
 			[c.name, c.get_class(), str(queued), str(dead)])
 
-	# HITUNG PROJECTILE (mereka tidak punya is_dead, cukup queued)
 	for p in projectile_container.get_children():
 		var queuedp := p.is_queued_for_deletion()
 		if not queuedp:

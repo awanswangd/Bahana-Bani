@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b4t1mwoac3b5s"]
+[gd_scene load_steps=16 format=3 uid="uid://b4t1mwoac3b5s"]
 
 [ext_resource type="Script" uid="uid://qijs1shf4r7t" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://ctcawoigrn5eh" path="res://Asset/Background/WhatsApp Image 2025-11-30 at 11.06.43.jpeg" id="2_1bvp3"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d1wfy42x057kh" path="res://player.tscn" id="3_1bvp3"]
 [ext_resource type="FontFile" uid="uid://cbohj6gog6nmy" path="res://gloriahallelujah.ttf" id="4_lquwl"]
 [ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://bthytqndxtrp0" path="res://tutorial_popup.tscn" id="7_272bh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_272bh"]
 font = ExtResource("6_7mycd")
@@ -62,13 +63,22 @@ scale = Vector2(4, 4)
 position = Vector2(1170, 170)
 
 [node name="Marker2D3" type="Marker2D" parent="SpawnContainer"]
-position = Vector2(1166, 318)
+position = Vector2(1174, 318)
 
 [node name="Marker2D4" type="Marker2D" parent="SpawnContainer"]
-position = Vector2(1162, 441)
+position = Vector2(1170, 441)
 
 [node name="Marker2D5" type="Marker2D" parent="SpawnContainer"]
-position = Vector2(1160, 591)
+position = Vector2(1168, 591)
+
+[node name="Marker2D6" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1170, 537)
+
+[node name="Marker2D7" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1170, 489)
+
+[node name="Marker2D8" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1170, 385)
 
 [node name="enemycontainer" type="Node2D" parent="."]
 position = Vector2(-8, 4)
@@ -94,7 +104,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_lquwl")
 theme_override_font_sizes/font_size = 29
-text = "SCORE: INFO"
+text = "SCORE: -"
 label_settings = SubResource("LabelSettings_272bh")
 metadata/_edit_use_anchors_ = true
 
@@ -145,7 +155,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("4_lquwl")
 theme_override_font_sizes/font_size = 28
-text = "WAVE INFO"
+text = "WAVE -"
 label_settings = SubResource("LabelSettings_kek77")
 
 [node name="WaveIntroLabel" type="Label" parent="CanvasLayer"]
@@ -174,6 +184,9 @@ one_shot = true
 [node name="IntroTimer" type="Timer" parent="."]
 wait_time = 1.509
 one_shot = true
+
+[node name="Notification" parent="." instance=ExtResource("7_272bh")]
+visible = false
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="area_entered" from="PlayerLine" to="." method="_on_player_line_area_entered"]

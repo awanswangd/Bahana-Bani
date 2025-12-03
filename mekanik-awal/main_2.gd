@@ -9,7 +9,7 @@ var battle_theme = load("res://audio/bgm/battle_theme_2.ogg")
 var score: int = 0
 enum GameState { PLAYING, GAME_OVER }
 var game_state: GameState = GameState.PLAYING
-var restart_phrase := "hidup lagi"
+var restart_phrase := "hidup"
 var restart_index: int = 0
 
 @onready var player = $Player
@@ -99,7 +99,7 @@ func game_over() -> void:
 	for enemy in enemy_container.get_children():
 		enemy.queue_free()
 	var go_label = $CanvasLayer/GameOverLabel
-	go_label.text = "GAME OVER\nKetik \"hidup lagi\" untuk bermain lagi"
+	go_label.text = "GAME OVER\nKetik \"hidup\" untuk bermain lagi"
 	go_label.show()
 
 func add_score(amount: int):
@@ -464,7 +464,6 @@ func _check_wave_progress() -> void:
 		print("   -> spawning flag true, wait.")
 		return
 
-	# 3. Cek apakah masih ada entity hidup
 	var any_alive := false
 
 	#   3a. Cek enemy
@@ -488,7 +487,6 @@ func _check_wave_progress() -> void:
 		print("   -> there are still alive entities, wait.")
 		return
 
-	# 4. Sampai sini: tidak ada yang hidup lagi
 	print("   -> wave %d fully clear." % current_wave_index)
 
 	if current_wave_index < waves.size() - 1:

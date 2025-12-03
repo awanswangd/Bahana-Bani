@@ -114,7 +114,7 @@ func _ready() -> void:
 
 	if wave_intro_label:
 		wave_intro_label.hide()
-
+	spawn_boss()
 	start_wave(current_wave_index)
 	SoundManager.play_music(battle_theme)
 

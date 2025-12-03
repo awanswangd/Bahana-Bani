@@ -1,0 +1,169 @@
+[gd_scene load_steps=8 format=3 uid="uid://bthytqndxtrp0"]
+
+[ext_resource type="Script" uid="uid://dl4udnoepxvrw" path="res://tutorial_popup.gd" id="1_l7lko"]
+[ext_resource type="FontFile" uid="uid://d0amfycor10ee" path="res://MainMenu/fantasy-zone.ttf" id="2_cnou2"]
+[ext_resource type="Texture2D" uid="uid://brbsjx5hroi2y" path="res://enemybiasa.png" id="3_jahx3"]
+[ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="4_cnou2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4c57u"]
+bg_color = Color(0.105882, 0.105882, 0.105882, 0.972549)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0.0898438, 0.0898438, 0.0898438, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 50
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 50
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_efxa6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dg77c"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[node name="Notification" type="Panel"]
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 213.0
+offset_top = 105.0
+offset_right = 901.0
+offset_bottom = 561.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4c57u")
+script = ExtResource("1_l7lko")
+
+[node name="Close_bttn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_bottom = 45.0
+grow_horizontal = 0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_color = Color(0.849621, 0.849621, 0.849621, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("2_cnou2")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/focus = SubResource("StyleBoxEmpty_efxa6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dg77c")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dg77c")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dg77c")
+text = "X"
+alignment = 2
+icon_alignment = 1
+
+[node name="Prev_bttn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.046
+anchor_top = 0.52
+anchor_right = 0.046
+anchor_bottom = 0.52
+offset_left = 22.352
+offset_top = -29.12
+offset_right = 80.352
+offset_bottom = 15.88
+grow_horizontal = 0
+rotation = 1.5708
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_color = Color(0.849621, 0.849621, 0.849621, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("2_cnou2")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/focus = SubResource("StyleBoxEmpty_efxa6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dg77c")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dg77c")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dg77c")
+text = "V"
+alignment = 2
+icon_alignment = 1
+
+[node name="Next_bttn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.937
+anchor_top = 0.533
+anchor_right = 0.937
+anchor_bottom = 0.533
+offset_left = -22.656
+offset_top = 28.952
+offset_right = 35.344
+offset_bottom = 73.952
+grow_horizontal = 0
+rotation = -1.5708
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_color = Color(0.849621, 0.849621, 0.849621, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("2_cnou2")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/focus = SubResource("StyleBoxEmpty_efxa6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dg77c")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dg77c")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dg77c")
+text = "V"
+alignment = 2
+icon_alignment = 1
+
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -261.0
+offset_top = -54.5
+offset_right = 261.0
+offset_bottom = 54.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="TutorialText" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_cnou2")
+theme_override_font_sizes/font_size = 50
+text = "TUTORIAL"
+
+[node name="TutorialImage" type="TextureRect" parent="Container"]
+clip_contents = true
+custom_minimum_size = Vector2(250, 225)
+layout_mode = 2
+texture = ExtResource("3_jahx3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Message" type="Label" parent="Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_cnou2")
+theme_override_font_sizes/font_size = 24
+text = "Text disini"
+
+[connection signal="pressed" from="Close_bttn" to="." method="_on_close_bttn_pressed"]
+[connection signal="pressed" from="Prev_bttn" to="." method="_on_prev_bttn_pressed"]
+[connection signal="pressed" from="Next_bttn" to="." method="_on_next_bttn_pressed"]

@@ -1,7 +1,7 @@
 extends Control
 
-@export var pages: Array[Texture2D]           # nanti diisi komik beneran
-@export var placeholder_page_count: int = 3   # jumlah page sementara ajh
+@export var pages: Array[Texture2D]           
+@export var placeholder_page_count: int = 3   
 @export var next_scene_path: String = "res://main.tscn"
 
 @onready var page_texture: TextureRect = $Page
@@ -15,7 +15,6 @@ var use_placeholders: bool = false
 
 
 func _ready() -> void:
-	# Kalau belum ada gambar komik → pakai placeholder mode
 	if pages.is_empty():
 		use_placeholders = true
 		total_pages = placeholder_page_count
@@ -43,7 +42,6 @@ func _input(event: InputEvent) -> void:
 
 func _show_current_page() -> void:
 	if use_placeholders:
-		# Placeholder: kosongin texture, tampilkan teks
 		page_texture.texture = null
 		if placeholder_label:
 			placeholder_label.text = "Story 1 - Page %d / %d\n(placeholder)" % [
@@ -51,7 +49,6 @@ func _show_current_page() -> void:
 			]
 			placeholder_label.show()
 	else:
-		# Pakai gambar beneran
 		if current_page >= 0 and current_page < pages.size():
 			page_texture.texture = pages[current_page]
 		if placeholder_label:
@@ -62,7 +59,6 @@ func _next_page() -> void:
 	current_page += 1
 
 	if current_page >= total_pages:
-		# semua page selesai → lanjut ke gameplay
 		Transition.change_scene_to_file(next_scene_path)
 	else:
 		_show_current_page()

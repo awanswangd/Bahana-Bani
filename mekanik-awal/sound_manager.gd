@@ -1,12 +1,9 @@
 extends Node
 
-# Referensi ke BGMPlayer
 @onready var bgm_player = $BGMPlayer
 
-# Library untuk menyimpan sfx
 var sfx_library = {}
 
-# Daftar sfx
 var sfx_to_load = {
 	"win": "res://audio/sfx/win.wav",
 	"correct": "res://audio/sfx/correct.wav",
@@ -18,9 +15,7 @@ var sfx_to_load = {
 	"typing": "res://audio/sfx/typing.wav"
 }
 
-
 func _ready() -> void:
-	# Muat sfx
 	for sound_name in sfx_to_load:
 		sfx_library[sound_name] = load(sfx_to_load[sound_name])
 
@@ -36,18 +31,14 @@ func stop_music() -> void:
 	if bgm_player and bgm_player.playing:
 		bgm_player.stop()
 
-# Pemutar sfx
 func play_sfx(sound_name: String):
-	# Periksa sfx
 	if not sfx_library.has(sound_name):
 		print("Error: SFX " + sound_name + " not found")
 		return
-		
-	# Buat pemutar audio baru, transfer audio dari library
+
 	var sfx_player = AudioStreamPlayer.new()
 	sfx_player.stream = sfx_library[sound_name]
 	sfx_player.connect("finished", sfx_player.queue_free)
 	
-	# Tambahkan sebagai child dan play
 	add_child(sfx_player)
 	sfx_player.play()

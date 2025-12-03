@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://couduv1rtl83q" path="res://projectile.gd" id="1_a85iw"]
 [ext_resource type="Texture2D" uid="uid://cx2aq0tjbaa7c" path="res://arrow.png" id="2_qxf0c"]
 [ext_resource type="Shader" uid="uid://dciokyq6dqyx8" path="res://outline.gdshader" id="2_sxmqc"]
-[ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="3_dgwo2"]
+[ext_resource type="FontFile" uid="uid://dqfqm3ql53tab" path="res://Asset/font/Minecraft.ttf" id="4_sxmqc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2xblw"]
 shader = ExtResource("2_sxmqc")
@@ -35,7 +35,7 @@ offset_right = 172.667
 offset_bottom = -81.6667
 grow_horizontal = 2
 size_flags_horizontal = 3
-theme_override_fonts/normal_font = ExtResource("3_dgwo2")
+theme_override_fonts/normal_font = ExtResource("4_sxmqc")
 theme_override_font_sizes/mono_font_size = 43
 theme_override_font_sizes/normal_font_size = 126
 bbcode_enabled = true

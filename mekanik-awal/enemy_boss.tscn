@@ -1,7 +1,7 @@
 [gd_scene load_steps=30 format=3 uid="uid://bte6jakpixd0v"]
 
 [ext_resource type="Script" uid="uid://bryehlb8lltxd" path="res://enemy_boss.gd" id="1_ka1vu"]
-[ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="2_gr8om"]
+[ext_resource type="FontFile" uid="uid://dqfqm3ql53tab" path="res://Asset/font/Minecraft.ttf" id="2_gguhw"]
 [ext_resource type="Texture2D" uid="uid://37s6bubcaoq0" path="res://Asset/Sprite/boss sheet.png" id="2_ka1vu"]
 [ext_resource type="Shader" uid="uid://dciokyq6dqyx8" path="res://outline.gdshader" id="3_gguhw"]
 
@@ -203,7 +203,7 @@ offset_right = 46.8665
 offset_bottom = -6.56919
 scale = Vector2(0.25, 0.25)
 size_flags_horizontal = 3
-theme_override_fonts/normal_font = ExtResource("2_gr8om")
+theme_override_fonts/normal_font = ExtResource("2_gguhw")
 theme_override_font_sizes/mono_font_size = 87
 theme_override_font_sizes/normal_font_size = 45
 bbcode_enabled = true

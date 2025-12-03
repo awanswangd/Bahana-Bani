@@ -1,8 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbpuplgmdfmuy"]
+[gd_scene load_steps=7 format=3 uid="uid://bbpuplgmdfmuy"]
 
 [ext_resource type="Script" uid="uid://couduv1rtl83q" path="res://projectile.gd" id="1_a85iw"]
 [ext_resource type="Texture2D" uid="uid://cx2aq0tjbaa7c" path="res://arrow.png" id="2_qxf0c"]
+[ext_resource type="Shader" uid="uid://dciokyq6dqyx8" path="res://outline.gdshader" id="2_sxmqc"]
 [ext_resource type="FontFile" uid="uid://cicwsvg5cyhb0" path="res://Asset/font/Pixellari.ttf" id="3_dgwo2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2xblw"]
+shader = ExtResource("2_sxmqc")
+shader_parameter/line_color = Color(1, 1, 0, 1)
+shader_parameter/line_thickness = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_akgne"]
 size = Vector2(22.0896, 8.0597)
@@ -12,6 +18,7 @@ scale = Vector2(0.3, 0.3)
 script = ExtResource("1_a85iw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_2xblw")
 position = Vector2(3.8147e-06, 3.33333)
 scale = Vector2(0.12, 0.12)
 texture = ExtResource("2_qxf0c")

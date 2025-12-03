@@ -7,12 +7,9 @@ var EnemyBoss = preload("res://enemy_boss.tscn")
 var battle_theme = load("res://audio/bgm/battle_theme_endless.ogg")
 
 var score: int = 0
-var max_hp: int = 5
-var hp: int = max_hp
-
 enum GameState { PLAYING, GAME_OVER }
 var game_state: GameState = GameState.PLAYING
-var restart_phrase := "hidup lagi"
+var restart_phrase := "hidup"
 var restart_index: int = 0
 
 @onready var player = $Player
@@ -121,16 +118,6 @@ func _ready() -> void:
 	start_wave(current_wave_index)
 	SoundManager.play_music(battle_theme)
 
-func player_hit() -> void:
-	if game_state != GameState.PLAYING:
-		return
-	hp -= 1
-	if hp < 0:
-		hp = 0
-	update_hp_display()
-	if hp == 0:
-		game_over()
-
 func game_over() -> void:
 	game_state = GameState.GAME_OVER
 	print("GAME OVER")
@@ -140,7 +127,7 @@ func game_over() -> void:
 	for enemy in enemy_container.get_children():
 		enemy.queue_free()
 	var go_label = $CanvasLayer/GameOverLabel
-	go_label.text = "GAME OVER\nKetik \"hidup lagi\" untuk bermain lagi"
+	go_label.text = "GAME OVER\nKetik \"hidup\" untuk bermain lagi"
 	go_label.show()
 
 func add_score(amount: int):
@@ -148,37 +135,40 @@ func add_score(amount: int):
 	score_label.text = "SCORE: %d" % score
 
 func update_hp_display() -> void:
-	hp_label.text = "HP: %d" % hp
+	if player:
+		hp_label.text = "HP: %d" % player.hp
 
 func find_new_active_enemy(typed_character: String):
 	print("Searching for enemy starting with: '%s'" % typed_character)
+	
 	for projectile in projectile_container.get_children():
 		var prompt = projectile.get_prompt()
-		print("Checking projectile with prompt: '%s'" % prompt)
-		if prompt.is_empty():
-			continue
-
 		var next_character = prompt.substr(0, 1).to_lower()
 		if next_character == typed_character:
-			print("Found projectile that starts with %s" % next_character)
+			if active_enemy and active_enemy.has_method("set_targeted"):
+				active_enemy.set_targeted(false)
 			active_enemy = projectile
+			if active_enemy.has_method("set_targeted"):
+				active_enemy.set_targeted(true) 
+			if player.has_method("play_attack"):
+				player.play_attack()
 			current_letter_index = 1
 			active_enemy.set_next_character(current_letter_index)
 			return
-	
 	for enemy in enemy_container.get_children():
 		if "is_dead" in enemy and enemy.is_dead:
 			continue
 		var prompt = enemy.get_prompt()
-		print("Checking enemy with prompt: '%s'" % prompt)
-		if prompt.is_empty():
-			continue
-
 		var next_character = prompt.substr(0, 1).to_lower()
 		if next_character == typed_character:
-			print("Found enemy that starts with %s" % next_character)
+			if active_enemy and active_enemy.has_method("set_targeted"):
+				active_enemy.set_targeted(false)
 			SoundManager.play_sfx("typing")
 			active_enemy = enemy
+			if active_enemy.has_method("set_targeted"):
+				active_enemy.set_targeted(true) 
+			if player.has_method("play_attack"):
+				player.play_attack()
 			current_letter_index = 1
 			active_enemy.set_next_character(current_letter_index)
 			return
@@ -407,36 +397,22 @@ func _on_player_line_area_entered(area: Area2D) -> void:
 	if game_state != GameState.PLAYING:
 		return
 	var obj = area.get_parent()
-	if obj.is_in_group("enemy"):
-		hp -= 1
-		if hp > 0:
+	
+	if obj.is_in_group("enemy") or obj.is_in_group("projectile"):
+		if player.has_method("take_damage"):
+			player.take_damage(1)
+		if player.hp > 0: 
 			SoundManager.play_sfx("hit")
-		if hp < 0:
-			hp = 0
+		else:
+			pass
 		update_hp_display()
-		if obj == active_enemy:
-			active_enemy = null
-			current_letter_index = -1
-		obj.queue_free()
-		register_enemy_kill() 
-		call_deferred("_check_wave_progress")
-		if hp == 0:
-			game_over()
-		return
 
-	if obj.is_in_group("projectile"):
-		hp -= 1
-		if hp > 0:
-			SoundManager.play_sfx("hit")
-		if hp < 0:
-			hp = 0
-		update_hp_display()
 		if obj == active_enemy:
-			active_enemy = null
-			current_letter_index = -1
+			reset_active_enemy()
 		obj.queue_free()
+		register_enemy_kill()
 		call_deferred("_check_wave_progress")
-		if hp == 0:
+		if player.hp <= 0:
 			game_over()
 		return
 
@@ -512,17 +488,14 @@ func _check_wave_progress() -> void:
 
 	_update_wave_label()
 
-	# 1. Kalau masih ada yang harus di-spawn, jangan lanjut
 	if remaining_to_spawn > 0:
 		print("   -> still have remaining_to_spawn (%d), wait." % remaining_to_spawn)
 		return
 
-	# 2. Kalau masih flag spawning true, berarti spawn_timer masih kerja
 	if spawning:
 		print("   -> spawning flag true, wait.")
 		return
 
-	# 3. Cek apakah masih ada entity hidup
 	var any_alive := false
 
 	#   3a. Cek enemy
@@ -535,7 +508,6 @@ func _check_wave_progress() -> void:
 			any_alive = true
 			break
 
-	#   3b. Kalau enemy sudah habis, cek projectile
 	if not any_alive:
 		for p in projectile_container.get_children():
 			if not p.is_queued_for_deletion():
@@ -546,7 +518,6 @@ func _check_wave_progress() -> void:
 		print("   -> there are still alive entities, wait.")
 		return
 
-	# 4. Sampai sini: tidak ada yang hidup lagi
 	print("   -> wave %d fully clear." % current_wave_index)
 	call_deferred("_start_inter_wave_timer")
 
@@ -585,10 +556,8 @@ func _on_wave_timer_timeout() -> void:
 		wave_timer.stop()
 		return
 
-	# turunkan countdown
 	wave_countdown -= 1
 
-	# kalau masih ada sisa detik, update label dan tunggu tick berikutnya
 	if wave_countdown > 0:
 		if wave_label:
 			wave_label.text = "Wave complete — next in %ds" % wave_countdown
@@ -605,8 +574,12 @@ func _on_wave_timer_timeout() -> void:
 	start_wave(current_wave_index)
 
 func reset_active_enemy():
+	if active_enemy and is_instance_valid(active_enemy) and active_enemy.has_method("set_targeted"):
+		active_enemy.set_targeted(false)
 	active_enemy = null
 	current_letter_index = -1
+	if player and player.has_method("play_idle"):
+		player.play_idle()
 
 func _toggle_pause() -> void:
 	if get_tree().paused:

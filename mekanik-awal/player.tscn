@@ -164,7 +164,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5tmop")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -178,7 +178,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dx0e4")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 5.0
 }, {
@@ -201,6 +201,7 @@ script = ExtResource("1_onrkg")
 position = Vector2(0, 0.27391)
 scale = Vector2(0.145, 0.145)
 sprite_frames = SubResource("SpriteFrames_hqtel")
-animation = &"idle"
+animation = &"hurt"
 autoplay = "idle"
-frame_progress = 0.65011
+frame = 2
+frame_progress = 1.0

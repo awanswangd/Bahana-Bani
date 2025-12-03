@@ -42,17 +42,17 @@ script = ExtResource("1_d1sac")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 7.0
-offset_top = 5.0
-offset_right = 1161.0
-offset_bottom = 654.0
+offset_left = -7.0
+offset_top = -3.0
+offset_right = 1167.0
+offset_bottom = 660.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_dcpx8")
 flip_h = true
 
 [node name="Player" parent="." instance=ExtResource("3_udm53")]
-position = Vector2(34, 250)
+position = Vector2(38, 371)
 scale = Vector2(4, 4)
 
 [node name="SpawnContainer" type="Node2D" parent="."]
@@ -93,7 +93,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_l4kvc")
 theme_override_font_sizes/font_size = 29
-text = "SCORE: 0"
+text = "Score Info"
 label_settings = SubResource("LabelSettings_l4kvc")
 metadata/_edit_use_anchors_ = true
 
@@ -101,9 +101,10 @@ metadata/_edit_use_anchors_ = true
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -174.0
-offset_right = 155.0
-offset_bottom = -114.0
+offset_left = 4.0
+offset_top = -53.0
+offset_right = 159.0
+offset_bottom = 7.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -143,7 +144,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("4_l4kvc")
 theme_override_font_sizes/font_size = 28
-text = "tes"
+text = "Wave Info"
 label_settings = SubResource("LabelSettings_neb3w")
 
 [node name="WaveIntroLabel" type="Label" parent="CanvasLayer"]

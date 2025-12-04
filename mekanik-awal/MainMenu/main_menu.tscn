@@ -358,6 +358,7 @@ stream = ExtResource("8_r0x8f")
 bus = &"SFX"
 
 [node name="Leaderboard" type="Button" parent="."]
+layout_mode = 0
 offset_left = 24.0
 offset_top = 584.0
 offset_right = 302.0

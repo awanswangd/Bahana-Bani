@@ -53,7 +53,7 @@ var projectile_words = [
 
 var waves = [
 	{ "name":"Wave 1", "minion_count":5, "spawn_boss": false, "mix": false },
-	{ "name":"Wave 2", "minion_count":5, "spawn_boss": false, "mix": true  },
+	{ "name":"Wave 2", "minion_count":10, "spawn_boss": false, "mix": true  },
 	{ "name":"Wave 3", "minion_count":10, "spawn_boss": true,  "mix": true  }
 ]
 

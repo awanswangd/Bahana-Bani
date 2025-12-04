@@ -13,11 +13,13 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_83n0s"]
 texture = ExtResource("2_r0x8f")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8n28k"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vrkn"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7vrkn"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_color = Color(0.984375, 0.984375, 0.984375, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhts7"]
+bg_color = Color(1, 1, 1, 0.667)
+border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
@@ -26,14 +28,6 @@ corner_radius_bottom_left = 100
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7sn"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_color = Color(0.667969, 0.667969, 0.667969, 1)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhts7"]
-bg_color = Color(1, 1, 1, 0.667)
-border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
@@ -82,28 +76,26 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_83n0s")
 
 [node name="Title" type="Label" parent="Background_Img"]
-visible = false
+modulate = Color(0.984314, 0.584314, 0.294118, 1)
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -1103.0
-offset_top = -333.0
-offset_right = -514.0
-offset_bottom = -182.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.583543, 0.658824, 0.568456, 1)
-theme_override_colors/font_outline_color = Color(0.258824, 0, 0, 1)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -294.5
+offset_right = 294.5
+offset_bottom = 151.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.984131, 0.988267, 0.983287, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 22
-theme_override_constants/shadow_offset_x = -24
-theme_override_constants/shadow_offset_y = 1
-theme_override_constants/outline_size = 30
-theme_override_constants/shadow_outline_size = 12
+theme_override_constants/shadow_offset_x = 16
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/outline_size = 21
+theme_override_constants/shadow_outline_size = 18
 theme_override_fonts/font = ExtResource("2_7vrkn")
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8n28k")
 text = "BAHANA BANI"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -136,7 +128,7 @@ theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
 theme_override_fonts/font = ExtResource("4_83n0s")
 theme_override_font_sizes/font_size = 45
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rhts7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "STORY MODE"
@@ -154,7 +146,7 @@ theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
 theme_override_fonts/font = ExtResource("4_83n0s")
 theme_override_font_sizes/font_size = 45
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rhts7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "ENDLESS MODE"
@@ -172,7 +164,7 @@ theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
 theme_override_fonts/font = ExtResource("4_83n0s")
 theme_override_font_sizes/font_size = 45
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rhts7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "SETTINGS"
@@ -190,7 +182,7 @@ theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
 theme_override_fonts/font = ExtResource("4_83n0s")
 theme_override_font_sizes/font_size = 45
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rhts7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 text = "CREDITS"
@@ -365,6 +357,27 @@ bus = &"SFX"
 stream = ExtResource("8_r0x8f")
 bus = &"SFX"
 
+[node name="Leaderboard" type="Button" parent="."]
+offset_left = 24.0
+offset_top = 584.0
+offset_right = 302.0
+offset_bottom = 630.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.11
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_colors/font_pressed_color = Color(0.65, 0.65, 0.65, 1)
+theme_override_fonts/font = ExtResource("4_83n0s")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rhts7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fu7sn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
+text = "RECORD"
+icon_alignment = 1
+
 [connection signal="pressed" from="Main_Buttons/Start_bttn" to="." method="_on_start_bttn_pressed"]
 [connection signal="pressed" from="Main_Buttons/Endless_bttn" to="." method="_on_endless_bttn_pressed"]
 [connection signal="pressed" from="Main_Buttons/Setting_bttn" to="." method="_on_setting_bttn_pressed"]
@@ -374,3 +387,4 @@ bus = &"SFX"
 [connection signal="value_changed" from="Settings_tab/Volume Settings/Music_Volume" to="Settings_tab/Volume Settings/Music_Volume" method="_on_value_changed"]
 [connection signal="value_changed" from="Settings_tab/Volume Settings/Sfx_Volume" to="Settings_tab/Volume Settings/Sfx_Volume" method="_on_value_changed"]
 [connection signal="pressed" from="Notification/Close_bttn" to="." method="_on_close_bttn_pressed"]
+[connection signal="pressed" from="Leaderboard" to="." method="_on_leaderboard_pressed"]

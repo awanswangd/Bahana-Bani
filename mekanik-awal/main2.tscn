@@ -58,7 +58,7 @@ scale = Vector2(4, 4)
 [node name="SpawnContainer" type="Node2D" parent="."]
 
 [node name="Marker2D2" type="Marker2D" parent="SpawnContainer"]
-position = Vector2(1170, 170)
+position = Vector2(1181, 201)
 
 [node name="Marker2D3" type="Marker2D" parent="SpawnContainer"]
 position = Vector2(1166, 318)
@@ -68,6 +68,27 @@ position = Vector2(1162, 441)
 
 [node name="Marker2D5" type="Marker2D" parent="SpawnContainer"]
 position = Vector2(1160, 591)
+
+[node name="Marker2D6" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1160, 543)
+
+[node name="Marker2D7" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1160, 487)
+
+[node name="Marker2D8" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1160, 391)
+
+[node name="Marker2D9" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1160, 271)
+
+[node name="Marker2D10" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1178, 161)
+
+[node name="Marker2D11" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(2347, 519)
+
+[node name="Marker2D12" type="Marker2D" parent="SpawnContainer"]
+position = Vector2(1184, 343)
 
 [node name="enemycontainer" type="Node2D" parent="."]
 position = Vector2(-8, 4)

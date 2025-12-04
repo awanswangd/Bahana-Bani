@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-@export var max_hp: int = 1
+@export var max_hp: int = 5
 var hp: int
 var is_dead: bool = false
 var is_attacking: bool = false 

@@ -44,13 +44,11 @@ var word_list = [
 	"lapau","bahempang","pinggan","Kaspin","cawan","nyabit",
 ]
 var projectile_words = [
-	"way",
-	"dio",
-	"dak",
-	"dem",
-	"hit",
-	"apo",
-	"lon"
+	"po", "pi", "pow", "zap", "hit", "wid", "xo",
+	"bam", "dor", "boom", "zip", "duar", "tic", "toc",
+	"hey", "run", "cut", "tap", "top", "tip", "fix",
+	"zig", "zag", "fox", "no", "go", "up", "ha", "hi",
+	"woy", "gas", "los", "yep", "noh", "bom"
 ]
 
 var waves = [
@@ -108,7 +106,7 @@ func game_over() -> void:
 	for enemy in enemy_container.get_children():
 		enemy.queue_free()
 	var go_label = $CanvasLayer/GameOverLabel
-	go_label.text = "GAME OVER\nKetik \"hidup lagi\" untuk bermain lagi"
+	go_label.text = "GAME OVER\nKetik \"'hidup'\" untuk bermain lagi"
 	go_label.show()
 
 func add_score(amount: int):

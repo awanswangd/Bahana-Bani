@@ -1,32 +1,35 @@
 extends Node
 
-var save_path = "user://highscore.save"
-var high_score: int = 0
+var save_path = "user://leaderboard.save"
+var scores: Array = []
 
 func _ready():
-	load_score()
+	load_scores()
 
-func save_score():
+func add_score(new_score: int):
+	scores.append(new_score)
+	scores.sort()
+	scores.reverse()
+	if scores.size() > 20:
+		scores.resize(20) 
+		
+	save_scores()
+	
+func save_scores():
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 	if file:
-		file.store_32(high_score)
-		print("High Score berhasil disimpan.")
-	else:
-		print("Gagal menyimpan file!")
+		file.store_var(scores)
+		print("Leaderboard disimpan: ", scores)
 
-func load_score():
+func load_scores():
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ)
 		if file:
-			high_score = file.get_32()
-			print("High Score dimuat: ", high_score)
+			scores = file.get_var()
+			print("Leaderboard dimuat: ", scores)
 	else:
-		print("Belum ada file save. High Score diset ke 0.")
-		high_score = 0
-
-func check_and_update_highscore(current_score: int) -> bool:
-	if current_score > high_score:
-		high_score = current_score
-		save_score()
-		return true
-	return false
+		scores = []
+func get_best_score() -> int:
+	if scores.size() > 0:
+		return scores[0]
+	return 0

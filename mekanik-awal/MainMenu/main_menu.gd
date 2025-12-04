@@ -40,3 +40,6 @@ func _on_close_bttn_pressed() -> void:
 func _on_credits_pressed() -> void:
 	button_pressed.play()
 	Transition.change_scene_to_file("res://credits.tscn")
+
+func _on_leaderboard_pressed() -> void:
+	Transition.change_scene_to_file("res://leaderboard.tscn")

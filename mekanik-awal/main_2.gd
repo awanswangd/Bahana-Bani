@@ -31,25 +31,24 @@ var active_enemy = null
 var current_letter_index: int = -1
 
 var word_list = [
-	"temambugh",
-	"kaghai",
-	"kumbang",
-	"pedom",
-	"lapah",
-	"ghatong",
-	"lengong",
-	"ghuccah",
-	"tebengbang",
-	"mahu",
+	"temambugh","berondok","paten","bedangkik","dapoek",
+	"kaghai","langgar","aluang","andung","lebung",
+	"kumbang","balubua","jombang","lengong","tekuyung",
+	"pedom","Mandeh","nyanyang","santing","tingkap",
+	"lapah","sejemang","sipangkalan","dulang","ngadat",
+	"ghatong","baladas","pongkang","belange","jemuah",
+	"lengong","pening","gampong","nganyak","ngeladang",
+	"ghuccah","mangcek","betumbuk","bicek","busung",
+	"tebengbang","galo","mahu","makon","ngaro",
+	"jingok","pacak","cindo","beungeh","sonang",
+	"lapau","bahempang","pinggan","Kaspin","cawan","nyabit",
 ]
 var projectile_words = [
-	"po",
-	"pi",
-	"pow",
-	"zap",
-	"hit",
-	"wid",
-	"xo"
+	"po", "pi", "pow", "zap", "hit", "wid", "xo",
+	"bam", "dor", "boom", "zip", "duar", "tic", "toc",
+	"hey", "run", "cut", "tap", "top", "tip", "fix",
+	"zig", "zag", "fox", "no", "go", "up", "ha", "hi",
+	"woy", "gas", "los", "yep", "noh", "bom"
 ]
 
 var waves = [
@@ -99,7 +98,7 @@ func game_over() -> void:
 	for enemy in enemy_container.get_children():
 		enemy.queue_free()
 	var go_label = $CanvasLayer/GameOverLabel
-	go_label.text = "GAME OVER\nKetik \"hidup\" untuk bermain lagi"
+	go_label.text = "GAME OVER\nKetik \"'hidup'\" untuk bermain lagi"
 	go_label.show()
 
 func add_score(amount: int):

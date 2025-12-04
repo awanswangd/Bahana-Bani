@@ -158,10 +158,10 @@ script = ExtResource("2_qi2p4")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 clip_contents = false
-offset_left = -5.82046
+offset_left = -3.78711
 offset_top = -17.4262
-offset_right = 49.1795
-offset_bottom = 2.57383
+offset_right = 51.2129
+offset_bottom = 2.57382
 scale = Vector2(0.2, 0.2)
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("3_iifgy")

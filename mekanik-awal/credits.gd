@@ -8,14 +8,14 @@ extends Control
 @onready var content_box = $CenterContainer/VBoxContainer
 
 var credits_data = [
+	{ "role": "TO BE CONTINUED ", "name": "THANKS FOR PLAYING" },
 	{ "role": "DIRECTED BY", "name": "RANDI" },
 	{ "role": "ARTIST DESIGNER", "name": "HAFIZ" },
 	{ "role": "ARTIST DESIGNER", "name": "THEYO" },
 	{ "role": "ARTIST DESIGNER", "name": "RYON.YON" },
 	{ "role": "GAMEPLAY PROGRAMMER", "name": "JORDY" },
 	{ "role": "SOUND ENGINEER", "name": "ALBI" },
-	{ "role": "SPECIAL THANKS", "name": "THEYO & RYON.YON" },
-	{ "role": " ", "name": "TO BE CONTINUE" }
+	{ "role": "SPECIAL THANKS", "name": "THEYO & RYON.YON" }
 ]
 
 var credits_theme = load("res://audio/bgm/credits_theme.ogg")

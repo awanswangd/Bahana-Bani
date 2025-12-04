@@ -30,25 +30,24 @@ var restart_index: int = 0
 var active_enemy = null
 var current_letter_index: int = -1
 var word_list = [
-	"temambugh",
-	"kaghai",
-	"kumbang",
-	"pedom",
-	"lapah",
-	"ghatong",
-	"lengong",
-	"ghuccah",
-	"tebengbang",
-	"mahu",
+	"temambugh","berondok","paten","bedangkik","dapoek",
+	"kaghai","langgar","aluang","andung","lebung",
+	"kumbang","balubua","jombang","lengong","tekuyung",
+	"pedom","Mandeh","nyanyang","santing","tingkap",
+	"lapah","sejemang","sipangkalan","dulang","ngadat",
+	"ghatong","baladas","pongkang","belange","jemuah",
+	"lengong","pening","gampong","nganyak","ngeladang",
+	"ghuccah","mangcek","betumbuk","bicek","busung",
+	"tebengbang","galo","mahu","makon","ngaro",
+	"jingok","pacak","cindo","beungeh","sonang",
+	"lapau","bahempang","pinggan","Kaspin","cawan","nyabit",
 ]
 var projectile_words = [
-	"po",
-	"pi",
-	"pow",
-	"zap",
-	"hit",
-	"wid",
-	"xo"
+	"po", "pi", "pow", "zap", "hit", "wid", "xo",
+	"bam", "dor", "boom", "zip", "duar", "tic", "toc",
+	"hey", "run", "cut", "tap", "top", "tip", "fix",
+	"zig", "zag", "fox", "no", "go", "up", "ha", "hi",
+	"woy", "gas", "los", "yep", "noh", "bom"
 ]
 
 var base_minions_per_wave := 5          #jumlah musuh di awal wave 1
@@ -56,7 +55,7 @@ var minions_increment_per_wave := 1     #tiap wave nambah berapa musuh
 var max_minions_per_wave := 25          #batas maksimal musuh per wave
 var boss_wave_interval := 5             #tiap berapa wave muncul boss (0 = tidak pernah)
 var enemy_speed_multiplier: float = 1.0   #multiplier awal (1x speed normal)
-var enemy_speed_increment: float = 0.1   #nambah tiap 1 musuh mati (5%)
+var enemy_speed_increment: float = 0.05   #nambah tiap 1 musuh mati (5%)
 var total_kills: int = 0                  #cuma buat debug / info
 
 func register_enemy_kill() -> void:
@@ -144,19 +143,17 @@ func game_over() -> void:
 	for proj in projectile_container.get_children():
 		proj.queue_free()
 	
-	var is_new_record = GameData.check_and_update_highscore(score)
-	var best_score = GameData.high_score
+	GameData.add_score(score)
 	
+	var best_score = GameData.get_best_score()
 	var go_label = $CanvasLayer/GameOverLabel
 	
 	var final_text = "GAME OVER\n\n"
 	final_text += "Score: %d\n" % score
-	
-	if is_new_record:
-		final_text += "[color=yellow]NEW HIGH SCORE: %d !![/color]\n" % best_score
+	if score >= best_score and score > 0:
+		final_text += "[color=yellow]NEW RECORD !![/color]\n"
 	else:
-		final_text += "High Score: %d\n" % best_score
-		
+		final_text += "Score Terbaik: %d\n" % best_score
 	final_text += "\nKetik \"hidup\" untuk bermain lagi"
 	
 	go_label.text = final_text
@@ -216,7 +213,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			if game_state != GameState.GAME_OVER:
 				_toggle_pause()
 			return
-	
 	if event is InputEventKey and not event.is_pressed():
 		var key_typed = event.as_text().to_lower()
 		if key_typed == "":
@@ -245,16 +241,15 @@ func _unhandled_input(event: InputEvent) -> void:
 						SoundManager.play_sfx("projectile_correct")
 					else:
 						SoundManager.play_sfx("correct")
-					add_score(100)
+					if active_enemy.is_in_group("enemy"):
+						add_score(100)
 					current_letter_index = -1
 					var was_enemy := false
 					if active_enemy != null and active_enemy.is_in_group("enemy"):
 						was_enemy = true
-					# BOSS pakai multi-phase
 					if active_enemy != null and active_enemy.is_in_group("boss") and active_enemy.has_method("on_word_completed"):
 						active_enemy.on_word_completed()
 					else:
-						# musuh biasa / projectile
 						if active_enemy != null and active_enemy.has_method("die"):
 							active_enemy.die()
 						else:

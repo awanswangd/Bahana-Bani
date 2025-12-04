@@ -18,7 +18,13 @@ var has_arrived: bool = false
 
 func _ready() -> void:
 	add_to_group("enemy")
-	
+	randomize() 
+	stop_x -= randf_range(0.0, 150.0)
+	global_position.y += randf_range(-30.0, 30.0)
+	var screen_height = get_viewport_rect().size.y
+	var min_y = 80.0 
+	var max_y = screen_height - 80.0 
+	global_position.y = clamp(global_position.y, min_y, max_y)
 	if not shoot_timer.timeout.is_connected(_on_shoot_timer_timeout):
 		shoot_timer.timeout.connect(_on_shoot_timer_timeout)
 	
@@ -27,10 +33,10 @@ func _ready() -> void:
 	
 	if sprite.sprite_frames.has_animation("shoot"):
 		sprite.sprite_frames.set_animation_loop("shoot", false)
-	
 	if sprite.sprite_frames.has_animation("idle"):
 		sprite.sprite_frames.set_animation_loop("idle", true)
-		
+	if sprite.sprite_frames.has_animation("flight"):
+		sprite.sprite_frames.set_animation_loop("flight", true)
 	shoot_timer.wait_time = 2.0
 	shoot_timer.one_shot = false
 	shoot_timer.start()
@@ -38,28 +44,27 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_dead or is_shooting:
 		return
-
 	var final_speed := speed
 	var main = get_tree().get_first_node_in_group("main")
 	if main and main.has_method("get_enemy_speed_multiplier"):
 		final_speed *= main.get_enemy_speed_multiplier()
-
-	if global_position.x > stop_x:
+	var distance_to_stop = global_position.x - stop_x
+	if distance_to_stop > final_speed:
 		global_position.x -= final_speed
 		has_arrived = false
 		if sprite.animation != "flight":
 			sprite.play("flight")
+		if sprite.animation != "flight":
+			sprite.play("flight")
 	else:
-		global_position.x = stop_x
+		global_position.x = stop_x 
 		has_arrived = true
-		
 		if sprite.animation != "idle":
 			sprite.play("idle")
 
 func _on_shoot_timer_timeout() -> void:
 	if is_dead or is_shooting or not has_arrived:
 		return
-	
 	tembak_panah()
 
 func tembak_panah() -> void:

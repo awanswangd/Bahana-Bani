@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://dciokyq6dqyx8" path="res://outline.gdshader" id="2_iifgy"]
 [ext_resource type="Script" uid="uid://bf2q4civbivff" path="res://enemy.gd" id="2_qi2p4"]
-[ext_resource type="FontFile" uid="uid://dqfqm3ql53tab" path="res://Asset/font/Minecraft.ttf" id="3_iifgy"]
+[ext_resource type="FontFile" uid="uid://bdr1iwysedopj" path="res://Asset/font/Bukukoo.ttf" id="3_iifgy"]
 [ext_resource type="Texture2D" uid="uid://2heajim6bpt2" path="res://Asset/Sprite/Melee-Sheet.png" id="3_qi2p4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iifgy"]
@@ -158,10 +158,10 @@ script = ExtResource("2_qi2p4")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 clip_contents = false
-offset_left = -3.78711
-offset_top = -17.4262
-offset_right = 51.2129
-offset_bottom = 2.57382
+offset_left = -2.5417
+offset_top = -22.1867
+offset_right = 52.4583
+offset_bottom = -2.18672
 scale = Vector2(0.2, 0.2)
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("3_iifgy")

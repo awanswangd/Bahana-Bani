@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bte6jakpixd0v"]
+[gd_scene format=3 uid="uid://bte6jakpixd0v"]
 
 [ext_resource type="Script" uid="uid://bryehlb8lltxd" path="res://enemy_boss.gd" id="1_ka1vu"]
 [ext_resource type="FontFile" uid="uid://dqfqm3ql53tab" path="res://Asset/font/Minecraft.ttf" id="2_gguhw"]
@@ -131,7 +131,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b60ws")
 }],
-"loop": false,
+"loop": 0,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -157,7 +157,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wally")
 }],
-"loop": true,
+"loop": 1,
 "name": &"flight",
 "speed": 11.0
 }, {
@@ -171,7 +171,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5ciwr")
 }],
-"loop": false,
+"loop": 0,
 "name": &"hurt",
 "speed": 5.0
 }, {
@@ -182,7 +182,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jfrlh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 2.0
 }]
@@ -190,12 +190,12 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_4gyqm"]
 radius = 17.3183
 
-[node name="EnemyBoss" type="Node2D"]
+[node name="EnemyBoss" type="Node2D" unique_id=230252143]
 position = Vector2(990, 326)
 scale = Vector2(3.93437, 3.65083)
 script = ExtResource("1_ka1vu")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=947052246]
 clip_contents = false
 offset_left = -8.13342
 offset_top = -26.5693
@@ -204,8 +204,8 @@ offset_bottom = -6.56919
 scale = Vector2(0.25, 0.25)
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("2_gguhw")
-theme_override_font_sizes/mono_font_size = 87
 theme_override_font_sizes/normal_font_size = 45
+theme_override_font_sizes/mono_font_size = 87
 bbcode_enabled = true
 text = "Text Musuh"
 scroll_active = false
@@ -214,7 +214,7 @@ horizontal_alignment = 1
 justification_flags = 131
 metadata/_edit_use_anchors_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2094577673]
 material = SubResource("ShaderMaterial_w0l2u")
 position = Vector2(-0.508341, -4.10865)
 scale = Vector2(0.145, 0.145)
@@ -223,12 +223,12 @@ animation = &"flight"
 autoplay = "flight"
 flip_h = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1611364493]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2037104324]
 position = Vector2(-2.28753, -0.821731)
 shape = SubResource("CircleShape2D_4gyqm")
 
-[node name="PhaseTimer" type="Timer" parent="."]
+[node name="PhaseTimer" type="Timer" parent="." unique_id=1629322254]
 wait_time = 2.0
 one_shot = true

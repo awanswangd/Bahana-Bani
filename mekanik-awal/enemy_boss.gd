@@ -6,9 +6,9 @@ extends Node2D
 @export var is_dead: bool = false
 @export var speed: float = 1.0
 @export var words: Array[String] = [
-	"aku bossnya",
-	"ini testing",
-	"serangan terakhir"
+	"sana gahara",
+	"mato panas",
+	"mato hari"
 ]
 
 @onready var sprite = $AnimatedSprite2D
